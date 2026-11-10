@@ -229,6 +229,29 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .chip .c{position:absolute;top:-7px;right:-7px;background:var(--gold);color:var(--dark-text);font-size:.72rem;font-weight:700;width:22px;height:22px;border-radius:50%;display:none;place-items:center}
 .chip .c.on{display:grid}
 .build-sum{margin-top:18px;border-radius:16px;padding:18px;background:var(--surface)}
+/* Íconos propios */
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:middle}
+.side-link .ic .i{width:21px;height:21px}
+.side-link.main .ic{color:var(--dark-text)}
+.loc-row .ic{color:var(--accent)}
+.perks span{display:inline-flex;align-items:center;gap:6px}
+.perks .i{width:16px;height:16px;color:var(--accent)}
+.seg button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.seg .i{width:18px;height:18px}
+.pickup .i{width:17px;height:17px;color:var(--accent);margin-right:4px}
+.empty .e .i{width:56px;height:56px;color:var(--accent);stroke-width:1.4}
+.arma-card .big .i{width:48px;height:48px;color:var(--gold);stroke-width:1.5}
+.mbar .i{width:20px;height:20px}
+.steps-v .dot{font-weight:700;font-size:.85rem}
+.steps-v .dot .i{width:16px;height:16px;stroke-width:2.6;color:#13883e}
+.media.noimg::after,.sh-media.noimg::after{content:none}
+.ph{width:42%;max-width:120px;height:auto;opacity:.9}
+.quick button:not(.wa){display:flex;justify-content:space-between;align-items:center;gap:10px}
+.quick button:not(.wa)::after{content:"›";font-size:1.3rem;line-height:1;color:var(--accent)}
+/* Miniatura del ingrediente: el mismo dibujo que cae en la burger */
+.mini{position:relative;width:76px;height:30px;display:block}
+.mini .layer{position:absolute;left:50%;top:50%;margin:0!important;animation:none!important;cursor:inherit;transform:translate(-50%,-50%) scale(.27,.6)!important}
+.mini .layer:hover{filter:none}
 .b-title{font-weight:700;font-size:.9rem;margin-bottom:10px}
 .b-tags{display:flex;flex-wrap:wrap;gap:8px}
 .b-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:7px 8px 7px 12px;font-size:.86rem;color:var(--text);transition:.15s}
@@ -558,6 +581,24 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
   </symbol>
 </svg>
 
+<!-- Íconos propios (línea) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 10.5C4 6.9 7.6 4 12 4s8 2.9 8 6.5Z"/><path d="M3 14h18"/><path d="M4 17h16v.5A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5Z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></symbol>
+  <symbol id="i-chef" viewBox="0 0 24 24"><path d="M7 17h10v3.5H7z"/><path d="M7 17v-4.2A4 4 0 0 1 9.4 5.4a3.6 3.6 0 0 1 5.2 0A4 4 0 0 1 17 12.8V17"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4Z"/><path d="m3.5 7.5 8.5 4 8.5-4M12 11.5v9"/></symbol>
+  <symbol id="i-moto" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6l-3-8h3l3 8M6 14l3-5h3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7.5a3.5 3.5 0 0 0 0-7h-7a3.5 3.5 0 0 1 0-7H16"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M9.2 8.6c-.4 2.6 3 6.2 6 6.2l.8-1.4-1.9-1-1 .9c-1-.5-2-1.5-2.4-2.5l.9-1-.9-1.9Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+  <symbol id="i-dice" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M9 9h.01M15 9h.01M9 15h.01M15 15h.01M12 12h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+</svg>
+
 <!-- ============ ENCABEZADO ============ -->
 <header id="top">
   <div class="wrap nav">
@@ -590,7 +631,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
       <p class="lead">Hamburguesas, costillas y más. Pide en pocos pasos y te lo llevamos a casa.</p>
       <div class="hero-ctas">
         <a href="#carta" class="btn btn-gold">Hacer mi pedido</a>
-        <button class="btn btn-ghost" data-open-chat>Te ayudo a pedir 💬</button>
+        <button class="btn btn-ghost" data-open-chat><svg class="i"><use href="#i-chat"/></svg> Te ayudo a pedir</button>
       </div>
       <div class="how">
         <div><b>1</b>Elige</div>
@@ -641,7 +682,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
           <div class="b-title">Tu burger lleva:</div>
           <div class="b-tags" id="bTags"></div>
           <div class="build-actions">
-            <button class="btn btn-ghost" id="bRandom">🎲 Sorpréndeme</button>
+            <button class="btn btn-ghost" id="bRandom"><svg class="i"><use href="#i-dice"/></svg> Sorpréndeme</button>
             <button class="btn btn-ghost" id="bReset">Empezar de nuevo</button>
             <button class="btn btn-gold" id="bAdd">Agregar a mi pedido</button>
           </div>
@@ -669,7 +710,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
         <h3>¿Cuánto vale el domicilio?</h3>
         <p class="fine">Valores de ejemplo, por confirmar con el restaurante.</p>
         <div id="zones"></div>
-        <div class="perks"><span>⏱ 30–45 min aprox.</span><span>💵 Pago contraentrega</span><span>📦 Empaque sellado</span></div>
+        <div class="perks"><span><svg class="i"><use href="#i-clock"/></svg> 30–45 min aprox.</span><span><svg class="i"><use href="#i-cash"/></svg> Pago contraentrega</span><span><svg class="i"><use href="#i-box"/></svg> Empaque sellado</span></div>
         <a href="#carta" class="btn btn-gold">Hacer mi pedido</a>
       </div>
     </div>
@@ -693,9 +734,9 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
         <iframe id="mapFrame" title="Mapa Burger Ribs" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
       <div class="loc-card">
-        <div class="loc-row"><div class="ic">📍</div><div><small>Dirección</small><b>Calle 69 # 26A-09</b><span style="color:var(--muted);font-size:.9rem">Barrio Palermo, Manizales</span></div></div>
-        <div class="loc-row"><div class="ic">🕒</div><div><small>Horario</small><b id="horario"></b></div></div>
-        <div class="loc-row"><div class="ic">🧭</div><div><small>Referencias</small><ul class="refs" id="refs"></ul></div></div>
+        <div class="loc-row"><div class="ic"><svg class="i"><use href="#i-pin"/></svg></div><div><small>Dirección</small><b>Calle 69 # 26A-09</b><span style="color:var(--muted);font-size:.9rem">Barrio Palermo, Manizales</span></div></div>
+        <div class="loc-row"><div class="ic"><svg class="i"><use href="#i-clock"/></svg></div><div><small>Horario</small><b id="horario"></b></div></div>
+        <div class="loc-row"><div class="ic"><svg class="i"><use href="#i-route"/></svg></div><div><small>Referencias</small><ul class="refs" id="refs"></ul></div></div>
         <div class="loc-btns">
           <a class="btn btn-gold full" id="gmapsDir" target="_blank" rel="noopener">Cómo llegar</a>
           <a class="btn btn-ghost" id="wazeDir" target="_blank" rel="noopener">Waze</a>
@@ -756,16 +797,16 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
     <button class="x" id="closeSide" aria-label="Cerrar">✕</button>
   </div>
   <div class="side-body">
-    <a href="#carta" class="side-link main" data-side-close><span class="ic">🍔</span><span>Hacer mi pedido<small>Ver la carta</small></span></a>
-    <button class="side-link" data-side-act="cart"><span class="ic">🛍️</span><span>Mi pedido<small id="sideCart">Vacío</small></span></button>
-    <button class="side-link" data-side-act="chat"><span class="ic">💬</span><span>Te ayudo a pedir<small>El asistente te guía paso a paso</small></span></button>
-    <a href="#arma" class="side-link" data-side-close><span class="ic">🧑‍🍳</span><span>Arma tu burger<small>A tu gusto</small></span></a>
-    <button class="side-link" data-side-act="track"><span class="ic">📦</span><span>Seguir mi pedido<small id="sideTrack">Aún no has hecho pedidos</small></span></button>
+    <a href="#carta" class="side-link main" data-side-close><span class="ic"><svg class="i"><use href="#i-burger"/></svg></span><span>Hacer mi pedido<small>Ver la carta</small></span></a>
+    <button class="side-link" data-side-act="cart"><span class="ic"><svg class="i"><use href="#i-bag"/></svg></span><span>Mi pedido<small id="sideCart">Vacío</small></span></button>
+    <button class="side-link" data-side-act="chat"><span class="ic"><svg class="i"><use href="#i-chat"/></svg></span><span>Te ayudo a pedir<small>El asistente te guía paso a paso</small></span></button>
+    <a href="#arma" class="side-link" data-side-close><span class="ic"><svg class="i"><use href="#i-chef"/></svg></span><span>Arma tu burger<small>A tu gusto</small></span></a>
+    <button class="side-link" data-side-act="track"><span class="ic"><svg class="i"><use href="#i-box"/></svg></span><span>Seguir mi pedido<small id="sideTrack">Aún no has hecho pedidos</small></span></button>
     <div class="side-sep"></div>
-    <a href="#domicilios" class="side-link" data-side-close><span class="ic">🛵</span><span>Domicilios<small>Precios por barrio</small></span></a>
-    <a href="#ubicacion" class="side-link" data-side-close><span class="ic">📍</span><span>Ubicación y horario<small>Mapa y cómo llegar</small></span></a>
-    <a class="side-link" id="sideWa" target="_blank" rel="noopener"><span class="ic">📲</span><span>Escríbenos<small>WhatsApp</small></span></a>
-    <a href="https://www.instagram.com/burgerribs/" class="side-link" target="_blank" rel="noopener"><span class="ic">📸</span><span>Instagram<small>@burgerribs</small></span></a>
+    <a href="#domicilios" class="side-link" data-side-close><span class="ic"><svg class="i"><use href="#i-moto"/></svg></span><span>Domicilios<small>Precios por barrio</small></span></a>
+    <a href="#ubicacion" class="side-link" data-side-close><span class="ic"><svg class="i"><use href="#i-pin"/></svg></span><span>Ubicación y horario<small>Mapa y cómo llegar</small></span></a>
+    <a class="side-link" id="sideWa" target="_blank" rel="noopener"><span class="ic"><svg class="i"><use href="#i-wa"/></svg></span><span>Escríbenos<small>WhatsApp</small></span></a>
+    <a href="https://www.instagram.com/burgerribs/" class="side-link" target="_blank" rel="noopener"><span class="ic"><svg class="i"><use href="#i-ig"/></svg></span><span>Instagram<small>@burgerribs</small></span></a>
     <div class="side-label">Ir directo a</div>
     <div class="side-cats" id="sideCats"></div>
     <div class="side-label">Conócenos</div>
@@ -788,7 +829,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
 
 <!-- Asistente -->
 <div class="fab">
-  <div class="fab-hint" id="fabHint">¿Te ayudo a pedir? 🍔</div>
+  <div class="fab-hint" id="fabHint">¿Te ayudo a pedir?</div>
   <button class="fab-btn" id="fabBtn" aria-label="Abrir asistente de pedidos">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.2-.8-2.7-1.1-4.4-3.9-4.5-4.1-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l2 .9c.3.1.4.2.5.3.1.2.1.7-.1 1.2Z"/></svg>
   </button>
@@ -878,7 +919,7 @@ const MENU = [
   ]},
   { id:"entradas", nombre:"Entradas", items:[
     { id:"deditos", n:"Deditos de Mozzarella", p:14900, d:"Crujientes por fuera, queso fundido por dentro.", img:"img/deditos.jpg" },
-    { id:"maduritos", n:"Maduritos Gratinados", p:12900, d:"Plátano maduro gratinado con queso.", img:"img/maduritos.jpg", ico:"🍌" },
+    { id:"maduritos", n:"Maduritos Gratinados", p:12900, d:"Plátano maduro gratinado con queso.", img:"img/maduritos.jpg", ico:"" },
     { id:"chorizo", n:"Chorizo Artesanal", p:11900, d:"Chorizo artesanal a la parrilla.", img:"img/chorizo.jpg" },
   ]},
   { id:"bebidas", nombre:"Bebidas", lista:true, items:[
@@ -901,13 +942,15 @@ const MENU = [
 /* ===================== utilidades ===================== */
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
+const ico = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
+function noImg(img){ const p = img.parentNode; p.classList.add("noimg"); p.insertAdjacentHTML("beforeend", `<svg class="ph" viewBox="0 0 200 200"><use href="#brand"/></svg>`); img.remove(); }
 const money = n => "$" + n.toLocaleString("es-CO");
 const ITEMS = {};
 MENU.forEach(c => c.items.forEach(i => { if (!i.ref) ITEMS[i.id] = { sin:c.sin||[], ext:c.ext||[], ...i, cat:c.id }; }));
 MENU.forEach(c => c.items.forEach((i, k) => { if (i.ref) c.items[k] = ITEMS[i.ref]; }));
 const BARRIOS = CONFIG.zonas.flatMap(z => z.b.map(n => ({ n, p:z.p }))).sort((a,b) => a.n.localeCompare(b.n, "es"));
 const waLink = txt => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(txt)}`;
-const imgTag = (i, cls) => `<img src="${i.img}" alt="${i.n}" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()">`;
+const imgTag = (i, cls) => `<img src="${i.img}" alt="${i.n}" loading="lazy" onerror="noImg(this)">`;
 function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("on"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("on"),1800); }
 
 addEventListener("scroll", () => {
@@ -923,7 +966,7 @@ function renderTabs(){
 }
 function cardHTML(i){
   return `<article class="item" data-open="${i.id}">
-    <div class="media" data-ico="${i.ico||"🍔"}">${i.badge?`<span class="badge">${i.badge}</span>`:""}${imgTag(i)}</div>
+    <div class="media" data-ico="${i.ico||""}">${i.badge?`<span class="badge">${i.badge}</span>`:""}${imgTag(i)}</div>
     <div class="item-body">
       <h3>${i.n}</h3>
       <p>${i.d}</p>
@@ -938,7 +981,7 @@ function renderMenu(){
   if (c.lista) {
     $("#menuView").innerHTML = `<div class="drinks">${c.items.map(i=>`<div class="drink"><div class="n">${i.n}${i.d?`<small>${i.d}</small>`:""}</div><span class="price">${money(i.p)}</span><button class="plus" data-add="${i.id}" aria-label="Agregar ${i.n}">+</button></div>`).join("")}</div>`;
   } else {
-    const arma = c.id === "hamburguesas" ? `<a href="#arma" class="item arma-card"><span class="big">🧑‍🍳</span><h3>¿Ninguna te convence?</h3><p>Ármala tú, ingrediente por ingrediente.</p><span class="btn btn-gold">Arma tu burger</span></a>` : "";
+    const arma = c.id === "hamburguesas" ? `<a href="#arma" class="item arma-card"><span class="big">${ico("chef")}</span><h3>¿Ninguna te convence?</h3><p>Ármala tú, ingrediente por ingrediente.</p><span class="btn btn-gold">Arma tu burger</span></a>` : "";
     $("#menuView").innerHTML = `<div class="menu-grid">${c.items.map(cardHTML).join("")}${arma}</div>`;
   }
 }
@@ -995,9 +1038,9 @@ function lineLabel(l){ const d = lineDetails(l); return ITEMS[l.id].n + (d.lengt
 function renderCart(){
   const q = cartQty();
   $("#cartCount").textContent = q;
-  $("#mbarBtn").innerHTML = q ? `🛍️ Ver mi pedido (${q}) · ${money(cartTotal())}` : "🍔 Hacer mi pedido";
+  $("#mbarBtn").innerHTML = q ? `${ico("bag")} Ver mi pedido (${q}) · ${money(cartTotal())}` : `${ico("burger")} Hacer mi pedido`;
   if (!cart.length) {
-    $("#drawerBody").innerHTML = `<div class="empty"><div class="e">🍔</div><p>Tu pedido está vacío.<br>Elige algo de la carta para empezar.</p></div>`;
+    $("#drawerBody").innerHTML = `<div class="empty"><div class="e">${ico("burger")}</div><p>Tu pedido está vacío.<br>Elige algo de la carta para empezar.</p></div>`;
     $("#drawerFoot").innerHTML = `<a href="#carta" class="btn btn-gold" data-close-cart>Ver la carta</a>`;
     return;
   }
@@ -1011,13 +1054,13 @@ function renderCart(){
     <a href="#carta" class="more" data-close-cart>＋ Agregar algo más</a>
     <div class="form">
       <div class="fstep"><span class="n">1</span>¿Cómo lo quieres recibir?</div>
-      <div class="seg"><button class="${dom?"active":""}" data-ent="domicilio">🛵 A domicilio</button><button class="${!dom?"active":""}" data-ent="recoger">🏠 Lo recojo</button></div>
+      <div class="seg"><button class="${dom?"active":""}" data-ent="domicilio">${ico("moto")} A domicilio</button><button class="${!dom?"active":""}" data-ent="recoger">${ico("bag")} Lo recojo</button></div>
       ${dom ? `
       <div class="fstep"><span class="n">2</span>¿A dónde lo llevamos?</div>
       <select id="fBarrio"><option value="">Elige tu barrio…</option>${BARRIOS.map(b => `<option value="${b.n}" ${order.barrio===b.n?"selected":""}>${b.n} — domicilio ${money(b.p)}</option>`).join("")}<option value="Otro" ${order.barrio==="Otro"?"selected":""}>Mi barrio no aparece</option></select>
       <input id="fDir" value="${order.direccion}" placeholder="Dirección (ej: Cra 23 # 65-10, apto 301)">` : `
       <div class="fstep"><span class="n">2</span>Te esperamos en el local</div>
-      <div class="pickup">📍 ${CONFIG.direccion}</div>`}
+      <div class="pickup">${ico("pin")} ${CONFIG.direccion}</div>`}
       <div class="fstep"><span class="n">3</span>¿A nombre de quién?</div>
       <input id="fNombre" value="${order.nombre}" placeholder="Tu nombre">
       <div class="fstep"><span class="n">4</span>¿Cómo vas a pagar?</div>
@@ -1074,15 +1117,15 @@ document.addEventListener("click", e => { if (e.target.closest("[data-close-cart
 
 function orderText(){
   const dom = order.entrega === "domicilio", fee = deliveryFee();
-  let t = `¡Hola Burger Ribs! 🍔\n*PEDIDO #${order.id}*\n\n`;
+  let t = `¡Hola Burger Ribs!\n*PEDIDO #${order.id}*\n\n`;
   cart.forEach(l => t += `• ${l.qty}x ${lineLabel(l)} — ${money(unitPrice(l)*l.qty)}\n`);
   t += `\nProductos: ${money(cartTotal())}\n`;
   if (dom) t += fee != null ? `Domicilio (${order.barrio}): ${money(fee)}\n` : `Domicilio: por confirmar\n`;
   t += `*Total a pagar: ${money(grandTotal())}*${dom && fee == null ? " + domicilio" : ""}\n\n`;
-  t += dom ? `🛵 Dirección: ${order.direccion}${fee != null ? ", " + order.barrio : ""}\n` : `🏠 Lo recojo en el local\n`;
-  if (order.nombre) t += `👤 Nombre: ${order.nombre}\n`;
-  t += `💳 Pago: ${order.pago}\n`;
-  if (order.notas) t += `📝 Notas: ${order.notas}\n`;
+  t += dom ? `Dirección: ${order.direccion}${fee != null ? ", " + order.barrio : ""}\n` : `Lo recojo en el local\n`;
+  if (order.nombre) t += `Nombre: ${order.nombre}\n`;
+  t += `Pago: ${order.pago}\n`;
+  if (order.notas) t += `Notas: ${order.notas}\n`;
   return t;
 }
 
@@ -1116,7 +1159,7 @@ function renderSheet(){
   el.innerHTML = `
     <button class="x sh-x" data-sh="close" aria-label="Cerrar">✕</button>
     <div class="sh-body">
-      <div class="sh-media" data-ico="${i.ico||"🍔"}">${imgTag(i)}</div>
+      <div class="sh-media" data-ico="${i.ico||""}">${imgTag(i)}</div>
       <div class="sh-in">
         <h3>${i.n}</h3>
         <p class="sh-d">${i.d}</p>
@@ -1184,12 +1227,12 @@ function finalizeOrder(fromBot){
 // En la versión real, cada etapa la marca el restaurante.
 function stagesFor(o){
   const fin = o.entrega === "domicilio"
-    ? [{ i:"🛵", n:"En camino", d:"El domiciliario va hacia tu dirección", seg:45 }, { i:"✅", n:"Entregado", d:"¡Buen provecho!", seg:75 }]
-    : [{ i:"🛍️", n:"Listo para recoger", d:"Te esperamos en el local", seg:45 }, { i:"✅", n:"Entregado", d:"¡Buen provecho!", seg:75 }];
+    ? [{ i:"", n:"En camino", d:"El domiciliario va hacia tu dirección", seg:45 }, { i:"", n:"Entregado", d:"¡Buen provecho!", seg:75 }]
+    : [{ i:"", n:"Listo para recoger", d:"Te esperamos en el local", seg:45 }, { i:"", n:"Entregado", d:"¡Buen provecho!", seg:75 }];
   return [
-    { i:"📲", n:"Pedido enviado", d:"Llegó a nuestro WhatsApp", seg:0 },
-    { i:"👍", n:"Confirmado", d:"Revisamos tu pedido", seg:8 },
-    { i:"🔥", n:"En preparación", d:"Tu pedido está en la plancha", seg:20 },
+    { i:"", n:"Pedido enviado", d:"Llegó a nuestro WhatsApp", seg:0 },
+    { i:"", n:"Confirmado", d:"Revisamos tu pedido", seg:8 },
+    { i:"", n:"En preparación", d:"Tu pedido está en la plancha", seg:20 },
     ...fin,
   ];
 }
@@ -1211,12 +1254,12 @@ function renderTrack(){
     </div>
     <div class="order-id"><b>#${o.id}</b><button id="copyId">Copiar</button></div>
     <span class="demo-tag">● Simulación del seguimiento</span>
-    <ul class="steps-v">${st.map((x,i) => `<li class="${i<k||k===st.length-1?"done":i===k?"now":""}"><span class="dot">${x.i}</span><div><b>${x.n}</b><small>${x.d}</small></div></li>`).join("")}</ul>
+    <ul class="steps-v">${st.map((x,i) => `<li class="${i<k||k===st.length-1?"done":i===k?"now":""}"><span class="dot">${i<k||k===st.length-1 ? ico("check") : i+1}</span><div><b>${x.n}</b><small>${x.d}</small></div></li>`).join("")}</ul>
     <div class="track-sum">${o.items.map(it => `<div><span>${it.qty}x ${it.label}</span><span>${money(it.total)}</span></div>`).join("")}
       ${dom ? `<div><span>Domicilio${o.fee != null ? ` (${o.barrio})` : ""}</span><span>${o.fee != null ? money(o.fee) : "Por confirmar"}</span></div>` : ""}
       <div class="tt"><span>Total a pagar</span><span>${money(grand)}${dom && o.fee == null ? " +" : ""}</span></div></div>
     <div class="track-btns">
-      <a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(`Hola Burger Ribs 👋 Quiero saber el estado de mi pedido #${o.id}`)}">Preguntar por mi pedido</a>
+      <a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(`Hola Burger Ribs Quiero saber el estado de mi pedido #${o.id}`)}">Preguntar por mi pedido</a>
       <button class="btn btn-ghost" id="closeTrack">Cerrar</button>
     </div>`;
   $("#closeTrack").onclick = closeTrack;
@@ -1264,7 +1307,7 @@ $("#wazeDir").href = `https://waze.com/ul?q=${q}&navigate=yes`;
 $("#copyAddr").onclick = () => { navigator.clipboard?.writeText(CONFIG.direccion); toast("Dirección copiada ✓"); };
 $("#horario").textContent = CONFIG.horario;
 $("#refs").innerHTML = CONFIG.referencias.map(r => `<li>${r}</li>`).join("");
-$("#sideWa").href = $("#footWa").href = waLink("¡Hola Burger Ribs! 👋");
+$("#sideWa").href = $("#footWa").href = waLink("¡Hola Burger Ribs!");
 $("#footWa").textContent = "WhatsApp · " + CONFIG.whatsapp.slice(2).replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
 $("#yr").textContent = new Date().getFullYear();
 $("#zones").innerHTML = CONFIG.zonas.map(z => `<div class="zone"><b>${money(z.p)}</b><span>${z.b.join(" · ")}</span></div>`).join("")
@@ -1296,28 +1339,28 @@ function botSay(html, opts=[], expect=null, placeholder=""){
 }
 /* ---------- menú principal ---------- */
 const mainOpts = () => [
-  { l:"🍔 Hacer un pedido", fn:()=>botCategorias() },
-  { l:"✨ Recomiéndame algo", fn:botRecomendar },
-  ...(cart.length ? [{ l:`🧾 Ver mi pedido (${cartQty()})`, fn:()=>botEditCart() }] : []),
-  { l:"📦 ¿Cómo va mi pedido?", fn:botEstado },
-  { l:"❓ Preguntas frecuentes", fn:botFAQ },
-  { l:"💬 Hablar con una persona", fn:()=>botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo") },
+  { l:"Hacer un pedido", fn:()=>botCategorias() },
+  { l:"Recomiéndame algo", fn:botRecomendar },
+  ...(cart.length ? [{ l:`Ver mi pedido (${cartQty()})`, fn:()=>botEditCart() }] : []),
+  { l:"¿Cómo va mi pedido?", fn:botEstado },
+  { l:"Preguntas frecuentes", fn:botFAQ },
+  { l:"Hablar con una persona", fn:()=>botHumano("Claro, te comunico con una persona del equipo", "Hola Burger Ribs, quiero hablar con alguien del equipo") },
 ];
-function botStart(){ botSay("¡Hola! 👋 Soy el asistente de <b>Burger Ribs</b>. Toca una opción 👇", mainOpts()); }
+function botStart(){ botSay("¡Hola! Soy el asistente de <b>Burger Ribs</b>. Toca una opción", mainOpts()); }
 
 /* ---------- carta y productos ---------- */
 function botCategorias(intro){
-  botSay(intro || "¿Qué te provoca? 😋", [...MENU.map(c => ({ l:c.nombre, fn:()=>botItems(c) })), { l:"✨ Mejor recomiéndame", fn:botRecomendar }]);
+  botSay(intro || "¿Qué te provoca?", [...MENU.map(c => ({ l:c.nombre, fn:()=>botItems(c) })), { l:"Mejor recomiéndame", fn:botRecomendar }]);
 }
 function botItems(c){
-  botSay(`Toca la que quieras 👇`,
-    [...c.items.map(i => ({ l:`${i.n} · ${money(i.p)}`, fn:()=>botInfo(i) })), { l:"⬅ Otra categoría", fn:()=>botCategorias() }]);
+  botSay(`Toca la que quieras`,
+    [...c.items.map(i => ({ l:`${i.n} · ${money(i.p)}`, fn:()=>botInfo(i) })), { l:"Otra categoría", fn:()=>botCategorias() }]);
 }
 function botInfo(i){
   const cat = MENU.find(c => c.id === ITEMS[i.id].cat);
-  botSay(`<b>${i.n}</b> · <b class="gp">${money(i.p)}</b><br>${i.d || "Bien fría para acompañar 🧊"}`, [
-    { l:"✅ Lo quiero", fn:()=>botCustomStart(ITEMS[i.id]) },
-    { l:`⬅ Volver a ${cat.nombre}`, fn:()=>botItems(cat) },
+  botSay(`<b>${i.n}</b> · <b class="gp">${money(i.p)}</b><br>${i.d || "Bien fría para acompañar"}`, [
+    { l:"Lo quiero", fn:()=>botCustomStart(ITEMS[i.id]) },
+    { l:`Volver a ${cat.nombre}`, fn:()=>botItems(cat) },
   ]);
 }
 /* ---------- quitar / adicionar antes de agregar ---------- */
@@ -1328,60 +1371,60 @@ function botCustomStart(i){
 }
 function botNota(i, s){
   const ej = i.sin.includes("Salsas") ? "Ej: solo sin salsa de ajo" : "Ej: bien dorado";
-  botSay(`Escríbeme el detalle para la cocina 📝<br><small style="color:var(--muted)">${ej}</small>`,
-    [{ l:"⬅ Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }], v => { s.nota = v.slice(0, 120); botCustom(i, s); }, ej);
+  botSay(`Escríbeme el detalle para la cocina<br><small style="color:var(--muted)">${ej}</small>`,
+    [{ l:"Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }], v => { s.nota = v.slice(0, 120); botCustom(i, s); }, ej);
 }
 function botCustom(i, s, first){
   const now = custTxt(i, s);
   botSay(first ? `¿Le quieres <b>quitar</b> o <b>adicionar</b> algo?` : `Así va: <b>${now || "sin cambios"}</b><br>¿Algo más?`, [
-    { l: first ? "👍 No, así está perfecta" : "✅ Listo, así está bien", fn:()=>botComboQ(i, s) },
-    ...(s.sin.length < i.sin.length ? [{ l:"➖ Quitarle algo", fn:()=>botSin(i, s) }] : []),
-    ...(s.ext.length < i.ext.length ? [{ l:"➕ Adicionarle algo", fn:()=>botExt(i, s) }] : []),
-    { l: s.nota ? "📝 Cambiar el detalle" : "📝 Escribir un detalle (ej: solo sin una salsa)", fn:()=>botNota(i, s) },
-    ...(now ? [{ l:"↩️ Deshacer cambios", fn:()=>{ s.sin = []; s.ext = []; s.nota = ""; botCustom(i, s, true); } }] : []),
+    { l: first ? "No, así está perfecta" : "Listo, así está bien", fn:()=>botComboQ(i, s) },
+    ...(s.sin.length < i.sin.length ? [{ l:"Quitarle algo", fn:()=>botSin(i, s) }] : []),
+    ...(s.ext.length < i.ext.length ? [{ l:"Adicionarle algo", fn:()=>botExt(i, s) }] : []),
+    { l: s.nota ? "Cambiar el detalle" : "Escribir un detalle (ej: solo sin una salsa)", fn:()=>botNota(i, s) },
+    ...(now ? [{ l:"Deshacer cambios", fn:()=>{ s.sin = []; s.ext = []; s.nota = ""; botCustom(i, s, true); } }] : []),
   ]);
 }
 function botSin(i, s){
   botSay("¿Qué le quitamos?", [...i.sin.filter(x => !s.sin.includes(x)).map(x => ({ l:`Sin ${x.toLowerCase()}`, fn:()=>{ s.sin.push(x); botCustom(i, s); } })),
-    { l:"⬅ Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }]);
+    { l:"Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }]);
 }
 function botExt(i, s){
   botSay("¿Qué le adicionamos?", [...i.ext.filter(x => !s.ext.includes(x.id)).map(x => ({ l:`${x.n} +${money(x.p)}`, fn:()=>{ s.ext.push(x.id); botCustom(i, s); } })),
-    { l:"⬅ Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }]);
+    { l:"Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }]);
 }
 function botComboQ(i, s){
   if (!i.combo) return botConfirm(i, s);
-  botSay(`¿La quieres en <b>combo</b>? Son +${money(CONFIG.combo)} e incluye gaseosa y acompañante 🍟`, [
-    { l:"Sí, en combo 🍟", fn:()=>botSay("¿Con qué acompañante?", CONFIG.acompanantes.map(a => ({ l:a, fn:()=>{ s.combo = true; s.side = a; botConfirm(i, s); } }))) },
+  botSay(`¿La quieres en <b>combo</b>? Son +${money(CONFIG.combo)} e incluye gaseosa y acompañante`, [
+    { l:"Sí, en combo", fn:()=>botSay("¿Con qué acompañante?", CONFIG.acompanantes.map(a => ({ l:a, fn:()=>{ s.combo = true; s.side = a; botConfirm(i, s); } }))) },
     { l:"No, solo la hamburguesa", fn:()=>{ s.combo = false; s.side = null; botConfirm(i, s); } },
   ]);
 }
 function botConfirm(i, s){
   botSay(`Así queda:<br><b>${lineLabel(s)}</b><br>Valor: <b class="gp">${money(unitPrice(s))}</b><br><br>¿Lo agrego a tu pedido?`, [
-    { l:"✅ Sí, agregar a mi pedido", fn:()=>{ addLine(s, 1); botAdded(); } },
-    { l:"✏️ Cambiar algo", fn:()=>botCustomStart(i) },
-    { l:"❌ No, cancelar", fn:()=>botCategorias("Listo, no lo agregué. ¿Qué más te provoca?") },
+    { l:"Sí, agregar a mi pedido", fn:()=>{ addLine(s, 1); botAdded(); } },
+    { l:"Cambiar algo", fn:()=>botCustomStart(i) },
+    { l:"No, cancelar", fn:()=>botCategorias("Listo, no lo agregué. ¿Qué más te provoca?") },
   ]);
 }
 function botAdded(){
-  botSay(`✅ ¡Agregado!<br>Llevas ${cartQty()} producto(s) · <b>${money(cartTotal())}</b><br><br>¿Quieres algo más?`, [
-    { l:"➕ Sí, agregar algo más", fn:()=>botCategorias() },
-    { l:"✅ No, terminar mi pedido", fn:botEntrega },
-    { l:"🧾 Ver / cambiar mi pedido", fn:()=>botEditCart() },
+  botSay(`¡Agregado!<br>Llevas ${cartQty()} producto(s) · <b>${money(cartTotal())}</b><br><br>¿Quieres algo más?`, [
+    { l:"Sí, agregar algo más", fn:()=>botCategorias() },
+    { l:"No, terminar mi pedido", fn:botEntrega },
+    { l:"Ver / cambiar mi pedido", fn:()=>botEditCart() },
   ]);
 }
 
 /* ---------- ver y editar el pedido ---------- */
 function botEditCart(intro){
-  if (!cart.length) return botSay((intro ? intro + "<br>" : "") + "Tu pedido está vacío 🛒 ¿Armamos algo?", [
-    { l:"🍔 Hacer un pedido", fn:()=>botCategorias() }, { l:"✨ Recomiéndame algo", fn:botRecomendar }, { l:"🏠 Menú principal", fn:botStart },
+  if (!cart.length) return botSay((intro ? intro + "<br>" : "") + "Tu pedido está vacío ¿Armamos algo?", [
+    { l:"Hacer un pedido", fn:()=>botCategorias() }, { l:"Recomiéndame algo", fn:botRecomendar }, { l:"Menú principal", fn:botStart },
   ]);
   const list = cart.map(l => `• ${l.qty}x ${lineLabel(l)} — ${money(unitPrice(l)*l.qty)}`).join("<br>");
   botSay(`${intro || "Este es tu pedido:"}<br><br>${list}<br><br>Productos: <b>${money(cartTotal())}</b>`, [
-    { l:"✅ Terminar mi pedido", fn:botEntrega },
-    { l:"➕ Agregar algo más", fn:()=>botCategorias() },
-    ...cart.map(l => ({ l:`➖ Quitar 1 ${ITEMS[l.id].n}${l.combo ? " (combo)" : ""}`, fn:()=>botRemove(l.key) })),
-    { l:"🗑️ Borrar todo", fn:()=>{ cart.length = 0; renderCart(); botEditCart("🧹 Listo, borré tu pedido."); } },
+    { l:"Terminar mi pedido", fn:botEntrega },
+    { l:"Agregar algo más", fn:()=>botCategorias() },
+    ...cart.map(l => ({ l:`Quitar 1 ${ITEMS[l.id].n}${l.combo ? " (combo)" : ""}`, fn:()=>botRemove(l.key) })),
+    { l:"Borrar todo", fn:()=>{ cart.length = 0; renderCart(); botEditCart("Listo, borré tu pedido."); } },
   ]);
 }
 function botRemove(key){
@@ -1390,31 +1433,31 @@ function botRemove(key){
   const l = cart[k], name = ITEMS[l.id].n;
   l.qty--; if (l.qty <= 0) cart.splice(k, 1);
   renderCart();
-  botEditCart(`✅ Listo, quité 1 <b>${name}</b>.`);
+  botEditCart(`Listo, quité 1 <b>${name}</b>.`);
 }
 
 /* ---------- terminar el pedido ---------- */
 function botEntrega(){
-  if (!cart.length) return botSay("Aún no tienes nada en tu pedido 😅", [{ l:"🍔 Ver opciones", fn:()=>botCategorias() }, { l:"✨ Recomiéndame algo", fn:botRecomendar }]);
+  if (!cart.length) return botSay("Aún no tienes nada en tu pedido", [{ l:"Ver opciones", fn:()=>botCategorias() }, { l:"Recomiéndame algo", fn:botRecomendar }]);
   botSay("¿Cómo lo quieres recibir?", [
-    { l:"🛵 A domicilio", fn:()=>{ order.entrega = "domicilio"; renderCart(); botBarrio(); } },
-    { l:"🏠 Lo recojo en el local", fn:()=>{ order.entrega = "recoger"; renderCart(); botNombre(); } },
+    { l:"A domicilio", fn:()=>{ order.entrega = "domicilio"; renderCart(); botBarrio(); } },
+    { l:"Lo recojo en el local", fn:()=>{ order.entrega = "recoger"; renderCart(); botNombre(); } },
   ]);
 }
 function botBarrio(){
-  botSay("¿En qué <b>barrio</b> estás? Así te digo cuánto vale el domicilio 🛵", [
+  botSay("¿En qué <b>barrio</b> estás? Así te digo cuánto vale el domicilio", [
     ...BARRIOS.map(b => ({ l:`${b.n} · ${money(b.p)}`, fn:()=>{ order.barrio = b.n; renderCart(); botDir(); } })),
-    { l:"Mi barrio no aparece", fn:()=>{ order.barrio = "Otro"; renderCart(); botDir("No hay problema 👌 El valor del domicilio te lo confirmamos por WhatsApp."); } },
-    { l:"⬅ Volver", fn:botEntrega },
+    { l:"Mi barrio no aparece", fn:()=>{ order.barrio = "Otro"; renderCart(); botDir("No hay problema El valor del domicilio te lo confirmamos por WhatsApp."); } },
+    { l:"Volver", fn:botEntrega },
   ]);
 }
 function botDir(pre){
-  botSay(`${pre || `El domicilio a <b>${order.barrio}</b> vale <b class="gp">${money(deliveryFee())}</b> 👍`}<br><br>Ahora escríbeme tu <b>dirección</b> 📍`,
-    [{ l:"⬅ Cambiar barrio", fn:botBarrio }], v => { order.direccion = v; renderCart(); botNombre(); }, "Ej: Cra 23 # 65-10, apto 301");
+  botSay(`${pre || `El domicilio a <b>${order.barrio}</b> vale <b class="gp">${money(deliveryFee())}</b>`}<br><br>Ahora escríbeme tu <b>dirección</b>`,
+    [{ l:"Cambiar barrio", fn:botBarrio }], v => { order.direccion = v; renderCart(); botNombre(); }, "Ej: Cra 23 # 65-10, apto 301");
 }
-function botNombre(){ botSay("¿A nombre de quién va el pedido?", [{ l:"⬅ Volver", fn:botEntrega }], v => { order.nombre = v; renderCart(); botPago(); }, "Tu nombre"); }
+function botNombre(){ botSay("¿A nombre de quién va el pedido?", [{ l:"Volver", fn:botEntrega }], v => { order.nombre = v; renderCart(); botPago(); }, "Tu nombre"); }
 function botPago(){
-  botSay(`Perfecto, ${order.nombre.split(" ")[0]} 🙌 ¿Cómo vas a pagar?`,
+  botSay(`Perfecto, ${order.nombre.split(" ")[0]} ¿Cómo vas a pagar?`,
     CONFIG.pagos.map(p => ({ l:p, fn:()=>{ order.pago = p; renderCart(); botFinal(); } })));
 }
 function botFinal(){
@@ -1422,9 +1465,9 @@ function botFinal(){
   const list = cart.map(l => `• ${l.qty}x ${lineLabel(l)}`).join("<br>");
   const sum = `Productos: ${money(cartTotal())}` + (dom ? `<br>Domicilio${fee != null ? ` (${order.barrio})` : ""}: ${fee != null ? money(fee) : "por confirmar"}` : "")
     + `<br><b>Total a pagar: <span class="gp">${money(grandTotal())}</span>${dom && fee == null ? " + domicilio" : ""}</b>`;
-  botSay(`Tu pedido:<br>${list}<br><br>${sum}<br><br>Toca el botón verde y se abre WhatsApp con todo escrito 👇`, [
-    { l:"📲 Enviar por WhatsApp", wa:true, fn:()=>{ const id = finalizeOrder(true); botSay(`¡Listo! 🎉 Tu número de pedido es <b>#${id}</b>.<br>Solo dale <b>enviar</b> en WhatsApp y empezamos a prepararlo.`, [{ l:"📦 Ver seguimiento", fn:showTrack }, ...mainOpts()]); } },
-    { l:"✏️ Cambiar algo", fn:()=>botEditCart() },
+  botSay(`Tu pedido:<br>${list}<br><br>${sum}<br><br>Toca el botón verde y se abre WhatsApp con todo escrito`, [
+    { l:"Enviar por WhatsApp", wa:true, fn:()=>{ const id = finalizeOrder(true); botSay(`¡Listo! Tu número de pedido es <b>#${id}</b>.<br>Solo dale <b>enviar</b> en WhatsApp y empezamos a prepararlo.`, [{ l:"Ver seguimiento", fn:showTrack }, ...mainOpts()]); } },
+    { l:"Cambiar algo", fn:()=>botEditCart() },
   ]);
 }
 
@@ -1432,58 +1475,58 @@ function botFinal(){
 // items: [id, cantidad, combo?]
 const RECOS = {
   top: [
-    { why:"La <b>Winner Burger</b> es la más pedida: tocineta caramelizada y salsa Winner. En combo no falla 🏆", items:[["winner",1,true]] },
-    { why:"La <b>Winner de Costilla</b> es la de la casa: res y costilla ahumada 🔥", items:[["winner-costilla",1,true]] },
+    { why:"La <b>Winner Burger</b> es la más pedida: tocineta caramelizada y salsa Winner. En combo no falla", items:[["winner",1,true]] },
+    { why:"La <b>Winner de Costilla</b> es la de la casa: res y costilla ahumada", items:[["winner-costilla",1,true]] },
   ],
   res: [
-    { why:"Te va a encantar la <b>Winner Burger</b>, con tocineta caramelizada 🥓", items:[["winner",1,true]] },
+    { why:"Te va a encantar la <b>Winner Burger</b>, con tocineta caramelizada", items:[["winner",1,true]] },
     { why:"La <b>Hamburguesa de Panceta</b>: ahumada y jugosa.", items:[["panceta",1,true]] },
   ],
   costilla: [
-    { why:"La <b>Winner de Costilla</b>: res y costilla ahumada 🍖", items:[["winner-costilla",1,true]] },
+    { why:"La <b>Winner de Costilla</b>: res y costilla ahumada", items:[["winner-costilla",1,true]] },
     { why:"La <b>Hamburguesa de Costilla</b>, con costilla desmechada.", items:[["costilla",1,true]] },
     { why:"<b>Costillas BBQ</b> con papas en casco y una limonada.", items:[["costillas-bbq",1],["lim-natural",1]] },
   ],
-  pollo: [ { why:"El <b>Pollo Crunch</b>: extra crujiente con salsa de miel 🍗", items:[["pollo-crunch",1,true]] } ],
-  clasico: [ { why:"<b>La Clásica</b>: res a la parrilla y queso americano. Simple y perfecta 👌", items:[["clasica",1,true]] } ],
+  pollo: [ { why:"El <b>Pollo Crunch</b>: extra crujiente con salsa de miel", items:[["pollo-crunch",1,true]] } ],
+  clasico: [ { why:"<b>La Clásica</b>: res a la parrilla y queso americano. Simple y perfecta", items:[["clasica",1,true]] } ],
   perro: [
-    { why:"El <b>Perro Ranchero</b> con una gaseosa 🌭", items:[["perro-ranchero",1],["gaseosa",1]] },
+    { why:"El <b>Perro Ranchero</b> con una gaseosa", items:[["perro-ranchero",1],["gaseosa",1]] },
     { why:"El <b>Chori Perro</b>, con chorizo artesanal.", items:[["chori-perro",1],["gaseosa",1]] },
   ],
   pareja: [
-    { why:"Para probar lo mejor: una Winner y una Winner de Costilla en combo, y deditos para picar 🧀", items:[["winner",1,true],["winner-costilla",1,true],["deditos",1]] },
-    { why:"Plan tranquilo: <b>Salchipapas Burger Ribs</b> al centro y dos limonadas de coco 🥥", items:[["salchipapas",1],["lim-coco",2]] },
+    { why:"Para probar lo mejor: una Winner y una Winner de Costilla en combo, y deditos para picar", items:[["winner",1,true],["winner-costilla",1,true],["deditos",1]] },
+    { why:"Plan tranquilo: <b>Salchipapas Burger Ribs</b> al centro y dos limonadas de coco", items:[["salchipapas",1],["lim-coco",2]] },
   ],
   grupo: [
-    { why:"<b>Picada</b> y <b>Salchipapas</b> al centro, con gaseosas para todos 🎉", items:[["picada",1],["salchipapas",1],["gaseosa",4]] },
-    { why:"Cada uno con su burger en combo y deditos al centro 🍔", items:[["winner",2,true],["clasica",2,true],["deditos",1]] },
+    { why:"<b>Picada</b> y <b>Salchipapas</b> al centro, con gaseosas para todos", items:[["picada",1],["salchipapas",1],["gaseosa",4]] },
+    { why:"Cada uno con su burger en combo y deditos al centro", items:[["winner",2,true],["clasica",2,true],["deditos",1]] },
   ],
   economico: [
-    { why:"<b>Perro Americano</b> con gaseosa por menos de $25.000 💰", items:[["perro-americano",1],["gaseosa",1]] },
+    { why:"<b>Perro Americano</b> con gaseosa por menos de $25.000", items:[["perro-americano",1],["gaseosa",1]] },
     { why:"<b>La Clásica</b>: la mejor relación precio-sabor.", items:[["clasica",1]] },
   ],
   diferente: [
-    { why:"¿Y si la armas tú? En <b>Arma tu burger</b> eliges cada ingrediente 🍔", arma:true, items:[] },
-    { why:"<b>Perro Ranchero</b> con soda de sandía: dulce, salado y diferente 🍉", items:[["perro-ranchero",1],["soda",1]] },
+    { why:"¿Y si la armas tú? En <b>Arma tu burger</b> eliges cada ingrediente", arma:true, items:[] },
+    { why:"<b>Perro Ranchero</b> con soda de sandía: dulce, salado y diferente", items:[["perro-ranchero",1],["soda",1]] },
   ],
 };
 function botRecomendar(){
-  botSay("¡Te ayudo a elegir! 😋 ¿Para quién es?", [
-    { l:"🙋 Solo para mí", fn:botGusto },
-    { l:"💑 Para dos", fn:()=>showReco("pareja") },
-    { l:"👨‍👩‍👧 Para un grupo", fn:()=>showReco("grupo") },
-    { l:"💰 Algo económico", fn:()=>showReco("economico") },
-    { l:"🏆 Lo más pedido", fn:()=>showReco("top") },
-    { l:"🤩 Algo diferente", fn:()=>showReco("diferente") },
+  botSay("¡Te ayudo a elegir! ¿Para quién es?", [
+    { l:"Solo para mí", fn:botGusto },
+    { l:"Para dos", fn:()=>showReco("pareja") },
+    { l:"‍ Para un grupo", fn:()=>showReco("grupo") },
+    { l:"Algo económico", fn:()=>showReco("economico") },
+    { l:"Lo más pedido", fn:()=>showReco("top") },
+    { l:"Algo diferente", fn:()=>showReco("diferente") },
   ]);
 }
 function botGusto(){
   botSay("¿Qué se te antoja más?", [
-    { l:"🥩 Res con tocineta", fn:()=>showReco("res") },
-    { l:"🍖 Costilla", fn:()=>showReco("costilla") },
-    { l:"🍗 Pollo", fn:()=>showReco("pollo") },
-    { l:"🍔 Algo clásico", fn:()=>showReco("clasico") },
-    { l:"🌭 Perro caliente", fn:()=>showReco("perro") },
+    { l:"Res con tocineta", fn:()=>showReco("res") },
+    { l:"Costilla", fn:()=>showReco("costilla") },
+    { l:"Pollo", fn:()=>showReco("pollo") },
+    { l:"Algo clásico", fn:()=>showReco("clasico") },
+    { l:"Perro caliente", fn:()=>showReco("perro") },
   ]);
 }
 const recoTotal = r => r.items.reduce((s,[id,q,c]) => s + (ITEMS[id].p + (c ? CONFIG.combo : 0)) * q, 0);
@@ -1491,64 +1534,64 @@ function showReco(key, i=0){
   const list = RECOS[key], r = list[i % list.length];
   const lines = r.items.map(([id,q,c]) => `• ${q}x ${ITEMS[id].n}${c ? " (combo)" : ""}`).join("<br>");
   botSay(`${r.why}${lines ? `<br><br>${lines}<br>Total: <b class="gp">${money(recoTotal(r))}</b>` : ""}`, [
-    r.arma ? { l:"🍔 Ir a Arma tu burger", fn:()=>{ closeChat(); $("#arma").scrollIntoView({ behavior:"smooth" }); } } : { l:"✅ Agregar todo a mi pedido", fn:()=>addReco(r) },
-    ...(list.length > 1 ? [{ l:"🔄 Ver otra opción", fn:()=>showReco(key, i+1) }] : []),
-    { l:"⬅ Volver", fn:botRecomendar },
+    r.arma ? { l:"Ir a Arma tu burger", fn:()=>{ closeChat(); $("#arma").scrollIntoView({ behavior:"smooth" }); } } : { l:"Agregar todo a mi pedido", fn:()=>addReco(r) },
+    ...(list.length > 1 ? [{ l:"Ver otra opción", fn:()=>showReco(key, i+1) }] : []),
+    { l:"Volver", fn:botRecomendar },
   ]);
 }
 function addReco(r){
   r.items.forEach(([id,q,c]) => addLine({ id, combo:!!c, side:c ? CONFIG.acompanantes[0] : null }, q));
   const nota = r.items.some(x => x[2]) ? `<br><small style="color:var(--muted)">Los combos van con ${CONFIG.acompanantes[0].toLowerCase()}. Si quieres otro acompañante, escríbelo en las indicaciones.</small>` : "";
-  botSay(`✅ ¡Agregado!${nota}<br>Llevas ${cartQty()} producto(s) · <b>${money(cartTotal())}</b>`, [
-    { l:"✅ Terminar mi pedido", fn:botEntrega },
-    { l:"🧾 Ver / cambiar mi pedido", fn:()=>botEditCart() },
-    { l:"➕ Agregar algo más", fn:()=>botCategorias() },
+  botSay(`¡Agregado!${nota}<br>Llevas ${cartQty()} producto(s) · <b>${money(cartTotal())}</b>`, [
+    { l:"Terminar mi pedido", fn:botEntrega },
+    { l:"Ver / cambiar mi pedido", fn:()=>botEditCart() },
+    { l:"Agregar algo más", fn:()=>botCategorias() },
   ]);
 }
 
 /* ---------- preguntas frecuentes ---------- */
-const backOpts = () => [{ l:"❓ Otra pregunta", fn:botFAQ }, { l:"🍔 Hacer un pedido", fn:()=>botCategorias() }, { l:"🏠 Menú principal", fn:botStart }];
+const backOpts = () => [{ l:"Otra pregunta", fn:botFAQ }, { l:"Hacer un pedido", fn:()=>botCategorias() }, { l:"Menú principal", fn:botStart }];
 const FAQ = {
-  domicilio: ()=>botSay("El domicilio depende de tu barrio 🛵<br><br>" + CONFIG.zonas.map(z => `<b>${money(z.p)}</b>: ${z.b.join(", ")}`).join("<br>") + "<br><br>¿No ves tu barrio? Escríbenos y te confirmamos.", backOpts()),
-  tiempo: ()=>botSay(`Normalmente llega ${CONFIG.tiempoEntrega} ⏱️`, backOpts()),
-  pagos: ()=>botSay(`Puedes pagar con: <b>${CONFIG.pagos.join(", ")}</b> 💳`, backOpts()),
-  horario: ()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b> 🕒`, backOpts()),
-  combo: ()=>botSay(`Cualquier hamburguesa la puedes pedir en <b>combo por +${money(CONFIG.combo)}</b>: gaseosa + papas francesas, en casco, aros de cebolla o yuquitas 🍟`, [{ l:"🍔 Ver hamburguesas", fn:()=>botItems(MENU[0]) }, ...backOpts()]),
-  alergias: ()=>botHumano("Al elegir tu producto puedes quitarle ingredientes 📝 Si tienes una alergia, confírmalo con el equipo:", "Hola Burger Ribs, tengo una pregunta sobre ingredientes"),
+  domicilio: ()=>botSay("El domicilio depende de tu barrio<br><br>" + CONFIG.zonas.map(z => `<b>${money(z.p)}</b>: ${z.b.join(", ")}`).join("<br>") + "<br><br>¿No ves tu barrio? Escríbenos y te confirmamos.", backOpts()),
+  tiempo: ()=>botSay(`Normalmente llega ${CONFIG.tiempoEntrega}`, backOpts()),
+  pagos: ()=>botSay(`Puedes pagar con: <b>${CONFIG.pagos.join(", ")}</b>`, backOpts()),
+  horario: ()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, backOpts()),
+  combo: ()=>botSay(`Cualquier hamburguesa la puedes pedir en <b>combo por +${money(CONFIG.combo)}</b>: gaseosa + papas francesas, en casco, aros de cebolla o yuquitas`, [{ l:"Ver hamburguesas", fn:()=>botItems(MENU[0]) }, ...backOpts()]),
+  alergias: ()=>botHumano("Al elegir tu producto puedes quitarle ingredientes Si tienes una alergia, confírmalo con el equipo:", "Hola Burger Ribs, tengo una pregunta sobre ingredientes"),
 };
 function botFAQ(){
-  botSay("¿Qué quieres saber? 🤔", [
-    { l:"🛵 ¿Cuánto vale el domicilio?", fn:FAQ.domicilio },
-    { l:"⏱️ ¿Cuánto se demora?", fn:FAQ.tiempo },
-    { l:"💳 ¿Cómo puedo pagar?", fn:FAQ.pagos },
-    { l:"🕒 Horario", fn:FAQ.horario },
-    { l:"🗺️ ¿Dónde están?", fn:botUbicacion },
-    { l:"🍟 ¿Qué incluye el combo?", fn:FAQ.combo },
-    { l:"🥗 Alergias", fn:FAQ.alergias },
-    { l:"🏠 Menú principal", fn:botStart },
+  botSay("¿Qué quieres saber?", [
+    { l:"¿Cuánto vale el domicilio?", fn:FAQ.domicilio },
+    { l:"¿Cuánto se demora?", fn:FAQ.tiempo },
+    { l:"¿Cómo puedo pagar?", fn:FAQ.pagos },
+    { l:"Horario", fn:FAQ.horario },
+    { l:"¿Dónde están?", fn:botUbicacion },
+    { l:"¿Qué incluye el combo?", fn:FAQ.combo },
+    { l:"Alergias", fn:FAQ.alergias },
+    { l:"Menú principal", fn:botStart },
   ]);
 }
 function botUbicacion(){
-  botSay(`Estamos en <b>${CONFIG.direccion}</b> 📍`, [
-    { l:"🗺️ Abrir ruta", fn:()=>{ window.open($("#gmapsDir").href, "_blank"); botStart(); } },
-    { l:"👀 Ver el mapa aquí", fn:()=>{ closeChat(); $("#ubicacion").scrollIntoView({ behavior:"smooth" }); } },
-    { l:"🏠 Menú principal", fn:botStart },
+  botSay(`Estamos en <b>${CONFIG.direccion}</b>`, [
+    { l:"Abrir ruta", fn:()=>{ window.open($("#gmapsDir").href, "_blank"); botStart(); } },
+    { l:"Ver el mapa aquí", fn:()=>{ closeChat(); $("#ubicacion").scrollIntoView({ behavior:"smooth" }); } },
+    { l:"Menú principal", fn:botStart },
   ]);
 }
 function botEstado(){
-  if (!lastOrder) return botSay("Aún no tienes pedidos hechos desde aquí. ¿Armamos uno? 🍔", [{ l:"🍔 Hacer un pedido", fn:()=>botCategorias() }, { l:"🏠 Menú principal", fn:botStart }]);
+  if (!lastOrder) return botSay("Aún no tienes pedidos hechos desde aquí. ¿Armamos uno?", [{ l:"Hacer un pedido", fn:()=>botCategorias() }, { l:"Menú principal", fn:botStart }]);
   const st = stagesFor(lastOrder)[currentStage(lastOrder)];
   botSay(`Tu pedido <b>#${lastOrder.id}</b> está: <b>${st.i} ${st.n}</b><br><small style="color:var(--muted)">${st.d}</small>`, [
-    { l:"📦 Ver seguimiento", fn:showTrack },
-    { l:"💬 Preguntar al restaurante", fn:()=>{ window.open(waLink(`Hola Burger Ribs 👋 Quiero saber el estado de mi pedido #${lastOrder.id}`), "_blank"); botStart(); } },
-    { l:"🏠 Menú principal", fn:botStart },
+    { l:"Ver seguimiento", fn:showTrack },
+    { l:"Preguntar al restaurante", fn:()=>{ window.open(waLink(`Hola Burger Ribs Quiero saber el estado de mi pedido #${lastOrder.id}`), "_blank"); botStart(); } },
+    { l:"Menú principal", fn:botStart },
   ]);
 }
 function botHumano(intro, msg){
   const ref = lastOrder ? ` (pedido #${lastOrder.id})` : "";
   botSay(intro, [
-    { l:"💬 Escribir al restaurante", wa:true, fn:()=>{ window.open(waLink(msg + ref), "_blank"); botSay("Te abrí WhatsApp para que te atienda una persona del equipo 👌", mainOpts()); } },
-    { l:"🏠 Menú principal", fn:botStart },
+    { l:"Escribir al restaurante", wa:true, fn:()=>{ window.open(waLink(msg + ref), "_blank"); botSay("Te abrí WhatsApp para que te atienda una persona del equipo", mainOpts()); } },
+    { l:"Menú principal", fn:botStart },
   ]);
 }
 // El cuadro de texto solo aparece cuando el bot pide un dato (dirección o nombre)
@@ -1567,21 +1610,21 @@ $$("[data-open-chat]").forEach(b => b.onclick = openChat);
 /* ===================== arma tu burger ===================== */
 const BASE_PRICE = 16900;   // pan brioche + carne (precio de ejemplo)
 const INGR = [
-  { id:"carne",     n:"Carne extra",          p:7000, cls:"patty",    e:"🥩" },
-  { id:"pollo",     n:"Pollo crunch",         p:6000, cls:"chicken",  e:"🍗" },
-  { id:"cheddar",   n:"Queso cheddar",        p:2500, cls:"cheese",   e:"🧀" },
-  { id:"mozza",     n:"Mozzarella",           p:3000, cls:"mozza",    e:"🫕" },
-  { id:"tocineta",  n:"Tocineta",             p:4000, cls:"bacon",    e:"🥓" },
-  { id:"costilla",  n:"Costilla",             p:6000, cls:"ribs",     e:"🍖" },
-  { id:"huevo",     n:"Huevo frito",          p:2500, cls:"egg",      e:"🍳" },
-  { id:"aros",      n:"Aros de cebolla",      p:3000, cls:"rings",    e:"⭕" },
-  { id:"cebolla",   n:"Cebolla caramelizada", p:2000, cls:"onion",    e:"🧅" },
-  { id:"lechuga",   n:"Lechuga",              p:0,    cls:"lettuce",  e:"🥬" },
-  { id:"tomate",    n:"Tomate",               p:0,    cls:"tomato",   e:"🍅" },
-  { id:"pepinillos",n:"Pepinillos",           p:1000, cls:"pickles",  e:"🥒" },
-  { id:"jalapenos", n:"Jalapeños",            p:1500, cls:"jalapeno", e:"🌶️" },
-  { id:"winner",    n:"Salsa Winner",         p:0,    cls:"sauce",    e:"🥫" },
-  { id:"bbq",       n:"Salsa BBQ",            p:0,    cls:"sauce bbq",e:"🔥" },
+  { id:"carne",     n:"Carne extra",          p:7000, cls:"patty",    e:"" },
+  { id:"pollo",     n:"Pollo crunch",         p:6000, cls:"chicken",  e:"" },
+  { id:"cheddar",   n:"Queso cheddar",        p:2500, cls:"cheese",   e:"" },
+  { id:"mozza",     n:"Mozzarella",           p:3000, cls:"mozza",    e:"" },
+  { id:"tocineta",  n:"Tocineta",             p:4000, cls:"bacon",    e:"" },
+  { id:"costilla",  n:"Costilla",             p:6000, cls:"ribs",     e:"" },
+  { id:"huevo",     n:"Huevo frito",          p:2500, cls:"egg",      e:"" },
+  { id:"aros",      n:"Aros de cebolla",      p:3000, cls:"rings",    e:"" },
+  { id:"cebolla",   n:"Cebolla caramelizada", p:2000, cls:"onion",    e:"" },
+  { id:"lechuga",   n:"Lechuga",              p:0,    cls:"lettuce",  e:"" },
+  { id:"tomate",    n:"Tomate",               p:0,    cls:"tomato",   e:"" },
+  { id:"pepinillos",n:"Pepinillos",           p:1000, cls:"pickles",  e:"" },
+  { id:"jalapenos", n:"Jalapeños",            p:1500, cls:"jalapeno", e:"" },
+  { id:"winner",    n:"Salsa Winner",         p:0,    cls:"sauce",    e:"" },
+  { id:"bbq",       n:"Salsa BBQ",            p:0,    cls:"sauce bbq",e:"" },
 ];
 const MAX_LAYERS = 10;
 const IG = Object.fromEntries(INGR.map(i => [i.id, i]));
@@ -1595,7 +1638,7 @@ function initStack(){
 }
 function zfix(){ [...stackEl.children].forEach((c,i,a) => c.style.zIndex = a.length - i); }
 function addLayer(id){
-  if (layers.length >= MAX_LAYERS) return toast("¡Ya está muy alta! 😅 Quita algo primero");
+  if (layers.length >= MAX_LAYERS) return toast("¡Ya está muy alta! Quita algo primero");
   const l = { uid:++uid, id }; layers.push(l);
   const el = layerEl(IG[id].cls); el.dataset.uid = l.uid; el.title = "Quitar " + IG[id].n;
   stackEl.children[0].after(el);
@@ -1626,12 +1669,12 @@ function buildDesc(){
 function updateBuild(){
   $("#bPrice").textContent = money(buildPrice());
   const count = {}; layers.forEach(l => count[l.id] = (count[l.id]||0) + 1);
-  $("#bTags").innerHTML = `<span class="b-tag base">🍞 Pan brioche + carne</span>` +
-    Object.entries(count).map(([id,c]) => `<button class="b-tag" data-rm="${id}" aria-label="Quitar ${IG[id].n}">${IG[id].e} ${IG[id].n}${c > 1 ? ` ×${c}` : ""} <span class="rx">✕</span></button>`).join("") +
+  $("#bTags").innerHTML = `<span class="b-tag base">Pan brioche + carne</span>` +
+    Object.entries(count).map(([id,c]) => `<button class="b-tag" data-rm="${id}" aria-label="Quitar ${IG[id].n}">${IG[id].n}${c > 1 ? ` ×${c}` : ""} <span class="rx">✕</span></button>`).join("") +
     (layers.length ? "" : `<span class="b-empty">Toca los ingredientes de arriba para agregarlos</span>`);
   $$(".chip").forEach(ch => { const c = ch.querySelector(".c"); const n = count[ch.dataset.ing] || 0; c.textContent = n; c.classList.toggle("on", n > 0); });
 }
-$("#chips").innerHTML = INGR.map(i => `<button class="chip" data-ing="${i.id}"><span class="e">${i.e}</span><span class="t">${i.n}<small>${i.p ? "+" + money(i.p) : "Gratis"}</small></span><span class="c"></span></button>`).join("");
+$("#chips").innerHTML = INGR.map(i => `<button class="chip" data-ing="${i.id}"><span class="mini"><i class="layer ${i.cls}"></i></span><span class="t">${i.n}<small>${i.p ? "+" + money(i.p) : "Gratis"}</small></span><span class="c"></span></button>`).join("");
 $("#chips").addEventListener("click", e => { const c = e.target.closest(".chip"); if (c) addLayer(c.dataset.ing); });
 $("#bReset").onclick = initStack;
 $("#bRandom").onclick = () => {
