@@ -11,7 +11,7 @@
 <meta property="og:image" content="img/winner.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Serif+Display&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ---------- Colores: secciones oscuras y claras para dar contraste ---------- */
 :root,.dark{
@@ -22,20 +22,20 @@
   --bg:#f8f2e7; --surface:#ffffff; --surface-2:#f1e7d6; --line:#e3d4bd;
   --text:#1e160f; --muted:#6c5d4b; --accent:#b0760c;
 }
-:root{ --gold:#f4b63f; --gold-2:#ffd06e; --red:#e0482c; --wa:#25d366; --dark-text:#1e160f; --r:18px; --maxw:1140px; }
+:root{ --fh:"Bricolage Grotesque",Georgia,sans-serif; --fb:Figtree,system-ui,sans-serif; --gold:#f4b63f; --gold-2:#ffd06e; --red:#e0482c; --wa:#25d366; --dark-text:#1e160f; --r:18px; --maxw:1140px; }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.55;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);line-height:1.55;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
-.display{font-family:"Bebas Neue",Impact,sans-serif;letter-spacing:.02em;line-height:.95;font-weight:400}
+.display{font-family:var(--fh);letter-spacing:-.025em;line-height:1;font-weight:800}
 .accent{color:var(--accent)}
 .eyebrow{display:inline-block;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
 section{padding:110px 0;position:relative;background:var(--bg);color:var(--text);scroll-margin-top:64px}
 .sec-head{max-width:620px;margin-bottom:44px}
-.sec-head h2{font-size:clamp(2.8rem,6vw,4.4rem);margin:10px 0 12px}
+.sec-head h2{font-size:clamp(2rem,4.4vw,3.2rem);margin:8px 0 10px}
 .sec-head p{color:var(--muted);font-size:1.05rem}
 
 /* Botones */
@@ -91,7 +91,7 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 70px;overflow:hidden}
 .hero::after{content:"";position:absolute;right:-15%;top:5%;width:70vw;height:70vw;max-width:850px;max-height:850px;background:radial-gradient(circle,rgba(224,72,44,.22),transparent 60%);pointer-events:none}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
-.hero h1{font-size:clamp(3.4rem,8vw,6.6rem);margin:16px 0 20px}
+.hero h1{font-size:clamp(2.5rem,5.6vw,4.6rem);margin:14px 0 18px}
 .hero h1 em{font-style:normal;color:var(--gold);display:block}
 .hero .lead{font-size:1.15rem;color:var(--muted);max-width:430px;margin-bottom:32px}
 .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
@@ -102,7 +102,7 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .hero-img img{width:100%;height:100%;object-fit:cover;animation:slowzoom 18s ease-in-out infinite alternate}
 @keyframes slowzoom{to{transform:scale(1.07)}}
 .hero-tag{position:absolute;left:18px;bottom:20px;background:#fff;color:var(--dark-text);border-radius:16px;padding:12px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 20px 40px -10px #000;animation:float 5s ease-in-out infinite;text-align:left}
-.hero-tag .p{font-family:"Bebas Neue";font-size:1.9rem;color:#b0760c;line-height:1}
+.hero-tag .p{font-family:var(--fh);font-weight:800;font-size:1.4rem;color:#b0760c;line-height:1}
 .hero-tag small{display:block;font-size:.72rem;color:#6c5d4b}
 .hero-tag strong{font-size:.92rem}
 @keyframes float{50%{transform:translateY(-8px)}}
@@ -126,10 +126,10 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .media.noimg::after{content:attr(data-ico);font-size:5rem}
 .badge{position:absolute;left:12px;top:12px;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 11px;border-radius:999px;z-index:1}
 .item-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
-.item h3{font-family:"Bebas Neue";font-weight:400;font-size:1.75rem;line-height:1;letter-spacing:.02em}
+.item h3{font-family:var(--fh);font-weight:700;font-size:1.22rem;line-height:1.15;letter-spacing:-.01em}
 .item p{color:var(--muted);font-size:.92rem;margin:6px 0 16px;flex:1}
 .item-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.price{font-family:"Bebas Neue";font-size:1.7rem;color:var(--accent);white-space:nowrap;line-height:1}
+.price{font-family:var(--fh);font-weight:800;font-size:1.25rem;color:var(--accent);white-space:nowrap;line-height:1}
 .add{background:var(--gold);color:var(--dark-text);font-weight:700;font-size:.92rem;padding:11px 20px;border-radius:999px;transition:.2s}
 .add:hover{background:var(--gold-2)}
 .arma-card{background:var(--dark-text);color:#faf4ea;justify-content:center;text-align:center;padding:30px;gap:10px;align-items:center}
@@ -156,7 +156,7 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .sh-media.noimg{display:grid;place-items:center;background:#2a1f17}
 .sh-media.noimg::after{content:attr(data-ico);font-size:4.5rem}
 .sh-in{padding:20px 22px 10px}
-.sh-in h3{font-family:"Bebas Neue";font-weight:400;font-size:2.2rem;line-height:1}
+.sh-in h3{font-family:var(--fh);font-weight:800;font-size:1.6rem;letter-spacing:-.02em;line-height:1}
 .sh-d{color:var(--muted);margin:6px 0 4px}
 .sh-q{font-weight:700;margin:22px 0 10px;font-size:1rem}
 .sh-q small{font-weight:400;color:var(--muted);font-size:.8rem;margin-left:6px}
@@ -179,7 +179,7 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .qty.big button{width:42px;height:42px}
 .added{padding:34px 26px 26px;text-align:center;display:flex;flex-direction:column;gap:10px}
 .added .ok{width:70px;height:70px;border-radius:50%;background:#dcf7e6;color:#13883e;display:grid;place-items:center;margin:0 auto 6px;font-size:2rem;font-weight:700}
-.added h3{font-family:"Bebas Neue";font-weight:400;font-size:2.2rem;line-height:1}
+.added h3{font-family:var(--fh);font-weight:800;font-size:1.6rem;line-height:1}
 .added p{color:var(--muted)}
 .added .tot{margin:4px 0 12px;font-size:.95rem}
 .added .btn{width:100%}
@@ -190,7 +190,7 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .stage::after{content:"";position:absolute;bottom:46px;left:50%;transform:translateX(-50%);width:360px;max-width:90%;height:34px;border-radius:50%;background:radial-gradient(ellipse,#2a2119 0 55%,#3a2e22 56% 62%,transparent 64%)}
 .stage-price{position:absolute;top:18px;left:18px;background:#fff;color:var(--dark-text);border-radius:14px;padding:10px 16px}
 .stage-price small{display:block;font-size:.7rem;color:#6c5d4b;text-transform:uppercase;letter-spacing:.12em;font-weight:700}
-.stage-price b{font-family:"Bebas Neue";font-weight:400;font-size:2rem;line-height:1}
+.stage-price b{font-family:var(--fh);font-weight:800;font-size:1.5rem;line-height:1}
 .stage-hint{position:absolute;top:24px;right:20px;font-size:.78rem;color:var(--muted);max-width:130px;text-align:right}
 .stack{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
 .layer{width:260px;position:relative;margin-top:-5px;animation:drop .6s cubic-bezier(.3,1.45,.5,1) both;cursor:pointer;transition:filter .2s}
@@ -229,7 +229,25 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .chip .c{position:absolute;top:-7px;right:-7px;background:var(--gold);color:var(--dark-text);font-size:.72rem;font-weight:700;width:22px;height:22px;border-radius:50%;display:none;place-items:center}
 .chip .c.on{display:grid}
 .build-sum{margin-top:18px;border-radius:16px;padding:18px;background:var(--surface)}
-.build-sum p{font-size:.9rem;color:var(--muted);min-height:22px}
+.b-title{font-weight:700;font-size:.9rem;margin-bottom:10px}
+.b-tags{display:flex;flex-wrap:wrap;gap:8px}
+.b-tag{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:7px 8px 7px 12px;font-size:.86rem;color:var(--text);transition:.15s}
+.b-tag.base{padding-right:12px;opacity:.8}
+.b-tag .rx{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:.7rem;font-weight:700}
+button.b-tag:hover{border-color:var(--red)}
+.b-empty{font-size:.86rem;color:var(--muted);align-self:center}
+.note-in{width:100%;margin-top:8px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:11px 13px;font:inherit;font-size:.92rem;color:var(--text);resize:none}
+.note-in:focus{outline:none;border-color:var(--accent)}
+/* Instagram */
+.ig{padding:80px 0}
+.ig-box{display:grid;grid-template-columns:1fr 1.3fr;gap:36px;align-items:center}
+.ig-box h2{font-size:clamp(1.9rem,4vw,2.8rem);margin:8px 0 10px}
+.ig-box p{color:var(--muted);margin-bottom:22px}
+.btn-ig{background:linear-gradient(45deg,#f9a33a,#e1306c 55%,#8a3ab9);color:#fff}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ig-grid a{aspect-ratio:1;border-radius:14px;overflow:hidden;position:relative;display:block}
+.ig-grid img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.ig-grid a:hover img{transform:scale(1.07)}
 .build-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
 .build-actions .btn{padding:13px 18px;font-size:.92rem}
 .build-actions .btn-gold{flex:1}
@@ -241,10 +259,10 @@ header.scrolled{background:rgba(15,12,10,.95);border-color:#2a221c}
 .deliv-photo .tag{position:absolute;left:16px;bottom:16px;background:#fff;color:var(--dark-text);border-radius:14px;padding:12px 16px;display:flex;gap:10px;align-items:center;font-size:.88rem;animation:float 5s ease-in-out infinite}
 .deliv-photo .tag i{width:10px;height:10px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 4px rgba(37,211,102,.25)}
 .zones{background:var(--surface);border-radius:24px;padding:30px;display:flex;flex-direction:column;box-shadow:0 2px 0 var(--line)}
-.zones h3{font-family:"Bebas Neue";font-weight:400;font-size:2rem;line-height:1;margin-bottom:6px}
+.zones h3{font-family:var(--fh);font-weight:800;font-size:1.5rem;line-height:1;margin-bottom:6px}
 .zones .fine{color:var(--muted);font-size:.86rem;margin-bottom:16px}
 .zone{display:flex;gap:16px;align-items:baseline;padding:13px 0;border-bottom:1px dashed var(--line)}
-.zone b{font-family:"Bebas Neue";font-weight:400;font-size:1.6rem;color:var(--accent);min-width:78px}
+.zone b{font-family:var(--fh);font-weight:800;font-size:1.15rem;color:var(--accent);min-width:78px}
 .zone span{font-size:.92rem}
 .perks{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 20px}
 .perks span{background:var(--surface-2);border-radius:999px;padding:7px 13px;font-size:.84rem}
@@ -281,7 +299,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
 .drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:var(--bg);color:var(--text);z-index:61;transform:translateX(102%);transition:transform .35s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:-20px 0 60px -20px #000}
 .drawer.on{transform:none}
 .drawer-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:var(--surface)}
-.drawer-head h3{font-family:"Bebas Neue";font-weight:400;font-size:2rem}
+.drawer-head h3{font-family:var(--fh);font-weight:800;font-size:1.45rem}
 .x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);font-size:1.1rem;display:grid;place-items:center}
 .drawer-body{flex:1;overflow-y:auto;padding:10px 22px 24px}
 .empty{text-align:center;color:var(--muted);padding:70px 10px}
@@ -306,7 +324,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
 .drawer-foot{padding:16px 22px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
 .sum div{display:flex;justify-content:space-between;font-size:.92rem;color:var(--muted);padding:2px 0}
 .sum .grand{color:var(--text);font-weight:700;font-size:1rem;margin-top:6px;align-items:baseline}
-.sum .grand b{font-family:"Bebas Neue";font-weight:400;font-size:2.1rem;color:var(--accent)}
+.sum .grand b{font-family:var(--fh);font-weight:800;font-size:1.6rem;color:var(--accent)}
 .err{color:var(--red);font-size:.86rem;font-weight:600;min-height:0;margin:4px 0}
 .drawer-foot .btn{width:100%;margin-top:8px}
 .tot-note{display:block;text-align:center;font-size:.78rem;color:var(--muted);margin-top:8px}
@@ -318,10 +336,10 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
 .track-wrap.on .track{transform:none}
 .track-top{text-align:center}
 .track-top .ok{width:64px;height:64px;border-radius:50%;background:#dcf7e6;color:#13883e;display:grid;place-items:center;margin:0 auto 12px;font-size:1.9rem}
-.track-top h3{font-family:"Bebas Neue";font-weight:400;font-size:2.1rem;line-height:1}
+.track-top h3{font-family:var(--fh);font-weight:800;font-size:1.6rem;line-height:1}
 .track-top p{color:var(--muted);font-size:.88rem;margin-top:6px}
 .order-id{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 4px}
-.order-id b{font-family:"Bebas Neue";font-weight:400;font-size:2.2rem;color:var(--accent);letter-spacing:.06em}
+.order-id b{font-family:var(--fh);font-weight:800;font-size:1.6rem;color:var(--accent);letter-spacing:.02em}
 .order-id button{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.78rem}
 .demo-tag{display:block;text-align:center;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:16px;font-weight:700}
 .steps-v{list-style:none;margin:8px 0 18px}
@@ -392,7 +410,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
 @media (max-width:960px){
   .nav-links{display:none}
   .cart-pill{margin-left:auto}
-  .hero-grid,.loc-grid,.builder,.deliv-grid{grid-template-columns:1fr}
+  .hero-grid,.loc-grid,.builder,.deliv-grid,.ig-box{grid-template-columns:1fr}
   .hero{min-height:auto;padding-top:96px}
   .hero-img{max-width:420px;margin:0 auto;width:100%}
   .menu-grid{grid-template-columns:repeat(2,1fr)}
@@ -423,8 +441,84 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
   .chip{padding:10px 4px}
   .chip .t{font-size:.76rem}
   .how div{font-size:.86rem}
-  .hero-img{aspect-ratio:4/3;border-radius:24px}
-  .seg.three button{padding:12px 4px;font-size:.84rem}
+  .hero-img{aspect-ratio:16/10;border-radius:20px}
+  .seg.three button{padding:10px 4px;font-size:.82rem}
+  /* --- versión celular compacta --- */
+  section{padding:54px 0}
+  .sec-head{margin-bottom:22px}
+  .sec-head p{font-size:.95rem}
+  .btn{padding:12px 20px;font-size:.92rem}
+  .nav{height:58px;gap:10px}
+  .burger-btn{width:40px;height:40px}
+  .logo-badge{width:38px;height:38px}
+  .cart-pill{padding:8px 12px}
+  .tabs-bar{top:58px;padding:10px 0;margin-bottom:14px}
+  section{scroll-margin-top:58px}
+  .hero{padding:80px 0 44px}
+  .hero-grid{gap:28px}
+  .hero h1{font-size:2.35rem;margin:10px 0 12px}
+  .hero .lead{font-size:1rem;margin-bottom:20px}
+  .hero-ctas{flex-wrap:nowrap;gap:8px}
+  .hero-ctas .btn{flex:1;padding:12px 8px;font-size:.88rem}
+  .how{margin-top:20px;gap:6px}
+  .how div{font-size:.78rem;padding:5px 10px 5px 5px;gap:6px}
+  .how b{width:22px;height:22px;font-size:.72rem}
+  .hero-tag{left:12px;bottom:12px;padding:8px 12px}
+  .hero-tag .p{font-size:1.15rem}
+  .tab{padding:8px 14px;font-size:.84rem}
+  .cat-note{font-size:.82rem;margin:-4px 0 14px}
+  .menu-grid{gap:12px}
+  .item{flex-direction:row}
+  .item .media{width:112px;aspect-ratio:auto;flex-shrink:0}
+  .media.noimg::after{font-size:2.6rem}
+  .badge{font-size:.58rem;padding:4px 7px;left:6px;top:6px}
+  .item-body{padding:12px 14px}
+  .item h3{font-size:1.02rem}
+  .item p{font-size:.82rem;margin:3px 0 8px}
+  .price{font-size:1.08rem}
+  .add{padding:7px 14px;font-size:.82rem}
+  .arma-card{padding:18px;flex-direction:column}
+  .arma-card .big{font-size:2.2rem}
+  .arma-card h3{font-size:1.2rem}
+  .drink{padding:10px 12px;gap:10px}
+  .drink .n{font-size:.9rem}
+  .drink .price{font-size:1rem}
+  .plus{width:34px;height:34px;font-size:1.2rem}
+  .stage{min-height:360px;padding-bottom:60px}
+  .stage::after{bottom:36px}
+  .stage-price{top:12px;left:12px;padding:7px 12px}
+  .chip{padding:8px 4px;gap:2px}
+  .chip .e{font-size:1.25rem}
+  .build-sum{padding:14px}
+  .build-actions .btn{padding:10px 12px;font-size:.84rem}
+  .deliv-photo{min-height:200px}
+  .zones{padding:20px}
+  .zone{padding:9px 0}
+  .zone span{font-size:.84rem}
+  .loc-card{padding:20px;gap:14px}
+  .ig{padding:54px 0}
+  .ig-grid{gap:6px}
+  .mbar{padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+  .mbar .btn{padding:11px 10px;font-size:.92rem}
+  .fab{bottom:72px}
+  .fab-btn{width:52px;height:52px}
+  .fab-btn svg{width:26px}
+  .to-top{bottom:72px;width:40px;height:40px}
+  .toast{bottom:130px}
+  .sh-media{aspect-ratio:2/1}
+  .sh-in{padding:14px 16px 6px}
+  .sh-q{margin:16px 0 8px;font-size:.92rem}
+  .opt{padding:9px 11px}
+  .pill{padding:7px 12px;font-size:.84rem}
+  .sh-foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .qty.big button{width:36px;height:36px}
+  .drawer-body{padding:8px 16px 20px}
+  .drawer-foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .form input,.form select,.form textarea{padding:11px 12px;font-size:.92rem}
+  .fstep{margin-top:14px;font-size:.92rem}
+  .side-link{padding:11px 10px;font-size:.95rem}
+  .side-link .ic{width:36px;height:36px}
+  .quick button{padding:9px 12px;font-size:.86rem}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -451,7 +545,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
       </g>
       <use href="#ala" transform="translate(200 0) scale(-1 1)"/>
     </g>
-    <text x="100" y="155" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" font-weight="600" letter-spacing="1" fill="#d4a64a">BURGERS, RIBS &amp; BEBIDAS</text>
+    <text x="100" y="155" text-anchor="middle" font-family="Figtree,Arial,sans-serif" font-size="7.5" font-weight="600" letter-spacing="1" fill="#d4a64a">BURGERS, RIBS &amp; BEBIDAS</text>
   </symbol>
 </svg>
 
@@ -525,18 +619,18 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
     <div class="sec-head reveal">
       <span class="eyebrow">A tu gusto</span>
       <h2 class="display">Arma tu <span class="accent">burger</span></h2>
-      <p>Toca los ingredientes y mírala crecer. Para quitar uno, tócalo en la hamburguesa.</p>
+      <p>Toca un ingrediente para agregarlo. Para quitarlo, toca la ✕.</p>
     </div>
     <div class="builder">
       <div class="stage">
         <div class="stage-price"><small>Tu burger</small><b id="bPrice">$0</b></div>
-        <div class="stage-hint">Toca una capa para quitarla</div>
         <div class="stack" id="stack"></div>
       </div>
       <div>
         <div class="chips" id="chips"></div>
         <div class="build-sum">
-          <p id="bList"></p>
+          <div class="b-title">Tu burger lleva:</div>
+          <div class="b-tags" id="bTags"></div>
           <div class="build-actions">
             <button class="btn btn-ghost" id="bRandom">🎲 Sorpréndeme</button>
             <button class="btn btn-ghost" id="bReset">Empezar de nuevo</button>
@@ -599,6 +693,26 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
           <button class="btn btn-ghost" id="copyAddr">Copiar dirección</button>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM ============ -->
+<section class="ig light">
+  <div class="wrap ig-box">
+    <div class="reveal">
+      <span class="eyebrow">Síguenos</span>
+      <h2 class="display">Antójate primero <span class="accent">en Instagram</span></h2>
+      <p>Novedades, promociones y lo que sale de la plancha cada día.</p>
+      <a href="https://www.instagram.com/burgerribs/" target="_blank" rel="noopener" class="btn btn-ig">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        Seguir a @burgerribs
+      </a>
+    </div>
+    <div class="ig-grid">
+      <a href="https://www.instagram.com/burgerribs/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/winner.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/burgerribs/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/salchipapas.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/burgerribs/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/winner-costilla.jpg" alt="" loading="lazy"></a>
     </div>
   </div>
 </section>
@@ -848,12 +962,12 @@ function deliveryFee(){
 }
 const grandTotal = () => cartTotal() + (deliveryFee() || 0);
 
-function lineKey(s){ return [s.id, s.combo ? s.side : "", [...(s.sin||[])].sort().join(","), [...(s.ext||[])].sort().join(",")].join("|"); }
+function lineKey(s){ return [s.id, s.combo ? s.side : "", [...(s.sin||[])].sort().join(","), [...(s.ext||[])].sort().join(","), (s.nota||"").trim()].join("|"); }
 function addLine(s, qty=1){
   const key = lineKey(s);
   let l = cart.find(l => l.key === key);
   if (l) l.qty += qty;
-  else { l = { key, id:s.id, combo:!!s.combo, side:s.combo ? s.side : null, sin:[...(s.sin||[])], ext:[...(s.ext||[])], qty }; cart.push(l); }
+  else { l = { key, id:s.id, combo:!!s.combo, side:s.combo ? s.side : null, sin:[...(s.sin||[])], ext:[...(s.ext||[])], nota:(s.nota||"").trim(), qty }; cart.push(l); }
   renderCart();
   const p = $("#openCart"); p.classList.remove("bump"); void p.offsetWidth; p.classList.add("bump");
   return l;
@@ -864,6 +978,7 @@ function lineDetails(l){
   (l.sin||[]).forEach(s => d.push(`sin ${s.toLowerCase()}`));
   (l.ext||[]).forEach(e => { const x = i.ext.find(x => x.id === e); if (x) d.push(`+ ${x.n.toLowerCase()}`); });
   if (i.extra) d.push(i.extra);
+  if (l.nota) d.push(`nota: ${l.nota}`);
   return d;
 }
 function lineLabel(l){ const d = lineDetails(l); return ITEMS[l.id].n + (d.length ? ` (${d.join(", ")})` : ""); }
@@ -966,7 +1081,7 @@ function orderText(){
 let sh = null;
 function openSheet(id){
   closeCart(); closeSide(); closeChat();
-  sh = { id, qty:1, combo:false, side:CONFIG.acompanantes[0], sin:[], ext:[], done:false };
+  sh = { id, qty:1, combo:false, side:CONFIG.acompanantes[0], sin:[], ext:[], nota:"", done:false };
   renderSheet(); $("#sheetWrap").classList.add("on");
 }
 function showAdded(line, qty){
@@ -1006,6 +1121,8 @@ function renderSheet(){
           ${sh.combo ? `<div class="sh-q">Elige el acompañante</div><div class="pills">${CONFIG.acompanantes.map(a => `<button class="pill ${sh.side===a?"on":""}" data-sside="${a}">${a}</button>`).join("")}</div>` : ""}` : ""}
         ${i.sin.length ? `<div class="sh-q">¿Le quitamos algo?<small>opcional</small></div><div class="pills">${i.sin.map(s => `<button class="pill no ${sh.sin.includes(s)?"on":""}" data-ssin="${s}">Sin ${s.toLowerCase()}</button>`).join("")}</div>` : ""}
         ${i.ext.length ? `<div class="sh-q">¿Le adicionamos algo?<small>opcional</small></div><div class="pills">${i.ext.map(x => `<button class="pill ${sh.ext.includes(x.id)?"on":""}" data-sext="${x.id}">${x.n} <small>+${money(x.p)}</small></button>`).join("")}</div>` : ""}
+        <div class="sh-q">¿Algún detalle para la cocina?<small>opcional</small></div>
+        <textarea class="note-in" id="shNota" rows="2" maxlength="120" placeholder="${i.sin.includes("Salsas") ? "Ej: solo sin salsa de ajo, término medio…" : "Ej: bien dorado, sin hielo…"}">${sh.nota}</textarea>
         <div style="height:14px"></div>
       </div>
     </div>
@@ -1031,6 +1148,7 @@ $("#sheet").addEventListener("click", e => {
   if (b.dataset.sext) toggleIn(sh.ext, b.dataset.sext);
   renderSheet();
 });
+$("#sheet").addEventListener("input", e => { if (e.target.id === "shNota") sh.nota = e.target.value; });
 $("#sheetWrap").addEventListener("click", e => { if (e.target.id === "sheetWrap") closeSheet(); });
 
 /* ===================== número de pedido + seguimiento ===================== */
@@ -1194,10 +1312,15 @@ function botInfo(i){
   ]);
 }
 /* ---------- quitar / adicionar antes de agregar ---------- */
-const custTxt = (i, s) => [...s.sin.map(x => "sin " + x.toLowerCase()), ...s.ext.map(e => "+ " + i.ext.find(x => x.id === e).n.toLowerCase())].join(", ");
+const custTxt = (i, s) => [...s.sin.map(x => "sin " + x.toLowerCase()), ...s.ext.map(e => "+ " + i.ext.find(x => x.id === e).n.toLowerCase()), ...(s.nota ? [`nota: "${s.nota}"`] : [])].join(", ");
 function botCustomStart(i){
-  const s = { id:i.id, combo:false, side:null, sin:[], ext:[] };
+  const s = { id:i.id, combo:false, side:null, sin:[], ext:[], nota:"" };
   (i.sin.length || i.ext.length) ? botCustom(i, s, true) : botConfirm(i, s);
+}
+function botNota(i, s){
+  const ej = i.sin.includes("Salsas") ? "Ej: solo sin salsa de ajo" : "Ej: bien dorado";
+  botSay(`Escríbeme el detalle para la cocina 📝<br><small style="color:var(--muted)">${ej}</small>`,
+    [{ l:"⬅ Volver", fn:()=>botCustom(i, s, !custTxt(i, s)) }], v => { s.nota = v.slice(0, 120); botCustom(i, s); }, ej);
 }
 function botCustom(i, s, first){
   const now = custTxt(i, s);
@@ -1205,7 +1328,8 @@ function botCustom(i, s, first){
     { l: first ? "👍 No, así está perfecta" : "✅ Listo, así está bien", fn:()=>botComboQ(i, s) },
     ...(s.sin.length < i.sin.length ? [{ l:"➖ Quitarle algo", fn:()=>botSin(i, s) }] : []),
     ...(s.ext.length < i.ext.length ? [{ l:"➕ Adicionarle algo", fn:()=>botExt(i, s) }] : []),
-    ...(now ? [{ l:"↩️ Deshacer cambios", fn:()=>{ s.sin = []; s.ext = []; botCustom(i, s, true); } }] : []),
+    { l: s.nota ? "📝 Cambiar el detalle" : "📝 Escribir un detalle (ej: solo sin una salsa)", fn:()=>botNota(i, s) },
+    ...(now ? [{ l:"↩️ Deshacer cambios", fn:()=>{ s.sin = []; s.ext = []; s.nota = ""; botCustom(i, s, true); } }] : []),
   ]);
 }
 function botSin(i, s){
@@ -1469,10 +1593,21 @@ function addLayer(id){
   const top = stackEl.children[0]; top.classList.remove("bump"); void top.offsetWidth; top.classList.add("bump");
   zfix(); updateBuild();
 }
+function removeLayer(uidToRemove){
+  layers = layers.filter(l => l.uid != uidToRemove);
+  const el = stackEl.querySelector(`[data-uid="${uidToRemove}"]`);
+  if (el) { el.classList.add("out"); setTimeout(() => { el.remove(); zfix(); }, 330); }
+  updateBuild();
+}
+// También se puede quitar tocando la capa en la hamburguesa
 stackEl.addEventListener("click", e => {
   const el = e.target.closest(".layer"); if (!el || el.classList.contains("fixed")) return;
-  layers = layers.filter(l => l.uid != el.dataset.uid);
-  el.classList.add("out"); setTimeout(() => { el.remove(); zfix(); }, 330); updateBuild();
+  removeLayer(el.dataset.uid);
+});
+$("#bTags").addEventListener("click", e => {
+  const b = e.target.closest("[data-rm]"); if (!b) return;
+  const last = [...layers].reverse().find(l => l.id === b.dataset.rm);
+  if (last) removeLayer(last.uid);
 });
 const buildPrice = () => BASE_PRICE + layers.reduce((s,l) => s + IG[l.id].p, 0);
 function buildDesc(){
@@ -1481,8 +1616,10 @@ function buildDesc(){
 }
 function updateBuild(){
   $("#bPrice").textContent = money(buildPrice());
-  $("#bList").innerHTML = layers.length ? `<b style="color:var(--text)">Pan brioche + carne</b> con ${buildDesc()}` : "Pan brioche + carne de res. ¡Agrégale lo que quieras!";
   const count = {}; layers.forEach(l => count[l.id] = (count[l.id]||0) + 1);
+  $("#bTags").innerHTML = `<span class="b-tag base">🍞 Pan brioche + carne</span>` +
+    Object.entries(count).map(([id,c]) => `<button class="b-tag" data-rm="${id}" aria-label="Quitar ${IG[id].n}">${IG[id].e} ${IG[id].n}${c > 1 ? ` ×${c}` : ""} <span class="rx">✕</span></button>`).join("") +
+    (layers.length ? "" : `<span class="b-empty">Toca los ingredientes de arriba para agregarlos</span>`);
   $$(".chip").forEach(ch => { const c = ch.querySelector(".c"); const n = count[ch.dataset.ing] || 0; c.textContent = n; c.classList.toggle("on", n > 0); });
 }
 $("#chips").innerHTML = INGR.map(i => `<button class="chip" data-ing="${i.id}"><span class="e">${i.e}</span><span class="t">${i.n}<small>${i.p ? "+" + money(i.p) : "Gratis"}</small></span><span class="c"></span></button>`).join("");
