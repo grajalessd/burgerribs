@@ -441,7 +441,16 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
   .chip{padding:10px 4px}
   .chip .t{font-size:.76rem}
   .how div{font-size:.86rem}
-  .hero-img{aspect-ratio:16/10;border-radius:20px}
+  /* Inicio en celular: la foto ocupa el fondo y el texto va encima */
+  .hero{padding:0;min-height:0}
+  .hero::after{display:none}
+  .hero-grid{position:static;display:block}
+  .hero-grid>div:first-child{position:relative;z-index:2;padding:330px 0 30px}
+  .hero-img{position:absolute;top:0;left:0;right:0;height:430px;max-width:none;aspect-ratio:auto;border-radius:0;box-shadow:none}
+  .hero-img img{object-position:center 55%}
+  .hero-img::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(15,12,10,.6) 0,rgba(15,12,10,0) 22%,rgba(15,12,10,0) 55%,rgba(15,12,10,.8) 78%,#0f0c0a 100%)}
+  .hero .hero-tag{left:auto;right:12px;bottom:auto;top:74px;z-index:3;padding:8px 12px}
+  .hero .lead{color:#d9ccb9}
   .seg.three button{padding:10px 4px;font-size:.82rem}
   /* --- versión celular compacta --- */
   section{padding:54px 0}
