@@ -397,7 +397,8 @@ footer{border-top:1px solid var(--line);padding:60px 0 120px;background:#080706}
 .quick button{border:1px solid var(--gold-dim);color:var(--gold-2);border-radius:999px;padding:8px 13px;font-size:.82rem;transition:.2s;text-align:left}
 .quick button:hover{background:var(--gold);color:#1a1206}
 .quick button.wa{background:var(--wa);border-color:var(--wa);color:#06260f;font-weight:700}
-.chat-in{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-in{display:none;gap:8px;padding:12px;border-top:1px solid var(--line);animation:pop .3s both}
+.chat-in.on{display:flex}
 .chat-in input{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:11px 16px;color:var(--cream);font:inherit;font-size:.88rem}
 .chat-in input:focus{outline:none;border-color:var(--gold)}
 .chat-in button{width:42px;height:42px;border-radius:50%;background:var(--gold);color:#1a1206;display:grid;place-items:center}
@@ -1145,8 +1146,9 @@ const msgs = $("#msgs");
 let expecting = null, started = false;
 function scrollChat(){ msgs.scrollTop = msgs.scrollHeight; }
 function userSay(t){ const d=document.createElement("div"); d.className="msg me"; d.textContent=t; msgs.appendChild(d); scrollChat(); }
-function botSay(html, opts=[], expect=null){
+function botSay(html, opts=[], expect=null, placeholder=""){
   $$(".quick").forEach(q=>q.remove());
+  expecting = null; $("#chatForm").classList.remove("on");
   const typing = document.createElement("div"); typing.className="msg bot typing"; typing.innerHTML="<i></i><i></i><i></i>";
   msgs.appendChild(typing); scrollChat();
   return new Promise(res => setTimeout(() => {
@@ -1159,7 +1161,7 @@ function botSay(html, opts=[], expect=null){
       msgs.appendChild(q);
     }
     expecting = expect;
-    if(expect) $("#chatInput").focus();
+    if(expect){ $("#chatInput").placeholder = placeholder || "Escribe aquí…"; $("#chatForm").classList.add("on"); $("#chatInput").focus(); }
     scrollChat(); res();
   }, 550));
 }
@@ -1172,7 +1174,7 @@ const mainOpts = () => [
   { l:"❓ Preguntas frecuentes", fn:botFAQ },
   { l:"💬 Hablar con una persona", fn:()=>botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo") },
 ];
-function botStart(){ botSay("¡Hola! 👋 Soy el asistente de <b>Burger Ribs</b>. Elige una opción o escríbeme tu pregunta:", mainOpts()); }
+function botStart(){ botSay("¡Hola! 👋 Soy el asistente de <b>Burger Ribs</b>. ¿En qué te ayudo? Elige una opción 👇", mainOpts()); }
 
 /* ---------- carta y productos ---------- */
 function botCategorias(intro){
@@ -1235,11 +1237,11 @@ const botResumen = () => botEditCart();
 function botEntrega(){
   if(!cart.length) return botSay("Aún no tienes nada en tu pedido 😅", [{ l:"🍔 Ver opciones", fn:()=>botCategorias() }, { l:"✨ Recomiéndame algo", fn:botRecomendar }]);
   botSay("¿Cómo lo quieres recibir?", [
-    { l:"🛵 Domicilio", fn:()=>{ order.entrega="domicilio"; botSay("Escríbeme tu <b>dirección y barrio</b> 📍", [], v=>{ order.direccion=v; botNombre(); }); } },
+    { l:"🛵 Domicilio", fn:()=>{ order.entrega="domicilio"; botSay("Escríbeme tu <b>dirección y barrio</b> 📍", [{ l:"⬅ Volver", fn:botEntrega }], v=>{ order.direccion=v; botNombre(); }, "Ej: Cra 23 # 65-10, Palermo"); } },
     { l:"🏠 Recojo en el local", fn:()=>{ order.entrega="recoger"; botNombre(); } },
   ]);
 }
-function botNombre(){ botSay("¿A nombre de quién va el pedido?", [], v=>{ order.nombre=v; botPago(); }); }
+function botNombre(){ botSay("¿A nombre de quién va el pedido?", [{ l:"⬅ Volver", fn:botEntrega }], v=>{ order.nombre=v; botPago(); }, "Tu nombre"); }
 function botPago(){
   botSay(`Perfecto, ${order.nombre.split(" ")[0]} 🙌 ¿Cómo vas a pagar?`,
     CONFIG.pagos.map(p=>({ l:p, fn:()=>{ order.pago=p; renderCart(); botFinal(); } })));
@@ -1386,120 +1388,12 @@ function botHumano(intro, msg){
   ]);
 }
 
-/* ---------- texto libre: entiende productos e intenciones del negocio ---------- */
-const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[¿?¡!.,]/g, " ").replace(/\s+/g, " ").trim();
-// Nombres con los que la gente pide cada producto (el orden importa: lo más específico primero)
-const ALIAS = [
-  ["winner-costilla", /winner (burger )?(de )?costilla/],
-  ["winner", /winner/],
-  ["costillas-bbq", /costillas? bbq|costillas\b/],
-  ["costilla", /costilla/],
-  ["panceta", /panceta/],
-  ["pollo-crunch", /pollo|crunch/],
-  ["clasica", /clasica/],
-  ["salchipapas", /salchipapa/],
-  ["picada", /picada/],
-  ["chori-perro", /chori ?perro/],
-  ["perro-ranchero", /ranchero/],
-  ["perro-americano", /perro americano/],
-  ["deditos", /dedito|mozzarella/],
-  ["maduritos", /madurito|maduro/],
-  ["chorizo", /chorizo/],
-  ["lim-cereza-coco", /cereza (de )?coco/],
-  ["lim-coco", /limonada de coco|\bcoco\b/],
-  ["lim-mango", /mango/],
-  ["lim-cereza", /cereza/],
-  ["lim-natural", /limonada( natural)?\b/],
-  ["soda", /soda/],
-  ["tres-cord", /tres cordilleras/],
-  ["corona", /corona/],
-  ["club-dorada", /dorada/],
-  ["club-negra", /club colombia negra|\bnegra\b/],
-  ["hatsu", /hatsu|\bte (verde|frio|hatsu)\b/],
-  ["gaseosa", /gaseosa|coca ?cola|\bcoca\b/],
-  ["agua", /\bagua\b/],
-];
-const findItem = s => { const a = ALIAS.find(([, re]) => re.test(s)); return a ? ITEMS[a[0]] : null; };
-const RX = {
-  quitar: /\b(quita|quitar|quitame|quitale|elimina|eliminar|eliminame|borra|borrar|borrame|saca|sacar|sacame|retira|retirar|remueve|remover)\b|me sobra|cancelar (un|una|uno|el|la|1|articulo|producto|item)|tengo (dos|2|doble)|(una|uno) de mas|solo (quiero )?(una|uno|1)\b/,
-  editar: /carrito|editar|modificar|cambiar (el |mi )?pedido/,
-  cancelar: /cancel/,
-  reclamo: /queja|reclamo|llego (frio|mal|incompleto|tarde)|no (me )?llego|falto|mal estado|equivocad|problema con/,
-  estado: /estado|donde (esta|va)\b|ya (viene|sale|salio)|br-?\d|numero de pedido|seguimiento|rastrear|cuando llega/,
-  info: /que (trae|tiene|lleva|contiene|viene|incluye)|de que (es|esta|son|viene)|ingrediente|como (es|son|viene)|descripcion|hecha|hecho/,
-  barato: /barat|economic|poca plata|poco dinero|presupuesto|no tengo mucha|sencillo|menos de/,
-  pareja: /para (dos|2)\b|pareja|novi[oa]|esposa|esposo|\bcita\b/,
-  grupo: /amigos|familia|grupo|varios|parche|reunion|para (3|4|5|6|tres|cuatro|cinco|seis)\b/,
-  reco: /recomi|no se que (pedir|comer)|sugier|sugerencia|que (me )?(pido|como)\b|indecis|la mas pedida|la mejor|favorit|lo mas rico|no se que/,
-  domicilio: /(cuanto|valor|costo|precio|vale|cobran).*(domicilio|envio)|(domicilio|envio).*(cuanto|vale|cuesta|cobran|valor|costo)/,
-  zonas: /llegan|cobertura|zona|barrio|hasta donde|hacen domicilio/,
-  tiempo: /demora|tarda|cuanto tiempo|tiempo de entrega|rapido/,
-  pagos: /\bpag(o|ar|an|os)\b|nequi|daviplata|tarjeta|efectivo|transferencia|datafono|bancolombia/,
-  horario: /\bhora|abren|cierran|abierto|atienden|domingo|festivo/,
-  ubicacion: /donde (estan|quedan|queda)|direcci|ubica|como llego|llegar|mapa|\blocal\b/,
-  combo: /combo/,
-  alergias: /alergi|gluten|vegetarian|vegan|sin (cebolla|tomate|salsa|lechuga|pepinillo)|picante/,
-  factura: /factura|\bnit\b|electronica/,
-  arma: /arma|personaliz|a mi gusto/,
-  carta: /carta|menu|precio|cuanto (vale|cuesta)|hamburgues|burger|perro|bebida|cerveza|entrada|pedir|antoj|tienen|ordenar|comprar|comida/,
-  gracias: /gracias|^listo|perfecto|genial|bacano|chevere|^ok\b|^vale\b/,
-  hola: /^(hola|buenas|buenos|hey|ola|saludos|que mas|q mas)/,
-  persona: /persona|humano|asesor|operador|alguien|hablar con/,
-  faq: /pregunta|duda/,
-};
-function botFree(t){
-  const s = norm(t), item = findItem(s);
-  // 1. Quitar o editar productos del carrito (antes de enviar el pedido)
-  if(RX.quitar.test(s) || ((RX.cancelar.test(s) || RX.editar.test(s)) && cart.length)){
-    if(!cart.length) return lastOrder
-      ? botHumano("Tu pedido ya fue enviado. Para cambiarlo, escríbele al equipo y lo ajustamos 👇", "Hola Burger Ribs, quiero hacer un cambio en mi pedido")
-      : botSay("Tu carrito está vacío, no hay nada que quitar 🙂", mainOpts());
-    if(item){
-      const l = cart.find(l => l.id === item.id);
-      return l ? botRemove(l.key) : botEditCart(`No tienes <b>${item.n}</b> en tu pedido 🤔 Esto es lo que llevas:`);
-    }
-    return botEditCart("Claro 👌 Toca lo que quieras quitar:");
-  }
-  // 2. Cancelar o cambiar un pedido ya enviado
-  if(RX.cancelar.test(s) || RX.editar.test(s)) return lastOrder
-    ? botHumano("Para cambiar o cancelar un pedido ya enviado, escríbenos directo y lo ajustamos de una 👇", "Hola Burger Ribs, quiero cancelar o cambiar mi pedido")
-    : botSay("Aún no has enviado ningún pedido 🙂 ¿Te ayudo a armar uno?", mainOpts());
-  if(RX.reclamo.test(s)) return botHumano("Lamentamos mucho lo que pasó 😔 Cuéntale al equipo y lo solucionamos lo antes posible.", "Hola Burger Ribs, tuve un problema con mi pedido");
-  if(RX.estado.test(s)) return botEstado();
-  // 3. Qué trae un producto
-  if(RX.info.test(s)) return item ? botInfo(item) : botCategorias("¿De cuál producto quieres saber? Elige la categoría y te cuento qué trae 👇");
-  // 4. Recomendaciones según ocasión o presupuesto
-  if(RX.barato.test(s)) return showReco("economico");
-  if(RX.pareja.test(s)) return showReco("pareja");
-  if(RX.grupo.test(s)) return showReco("grupo");
-  if(RX.reco.test(s)) return botRecomendar();
-  // 5. Preguntas del negocio
-  if(RX.domicilio.test(s)) return FAQ.domicilio();
-  if(RX.zonas.test(s)) return FAQ.zonas();
-  if(RX.tiempo.test(s)) return FAQ.tiempo();
-  if(RX.pagos.test(s)) return FAQ.pagos();
-  if(RX.horario.test(s)) return FAQ.horario();
-  if(RX.ubicacion.test(s)) return botUbicacion();
-  if(RX.combo.test(s)) return FAQ.combo();
-  if(RX.alergias.test(s)) return FAQ.alergias();
-  if(RX.factura.test(s)) return FAQ.factura();
-  // 6. Mencionó un producto ("quiero una winner", "tienen salchipapas")
-  if(item) return botInfo(item);
-  if(RX.arma.test(s)) { closeChat(); location.hash = "#arma"; return; }
-  if(RX.carta.test(s)) return botCategorias();
-  if(RX.persona.test(s)) return botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo");
-  if(RX.faq.test(s)) return botFAQ();
-  if(RX.gracias.test(s)) return botSay("¡Con gusto! 🙌 Aquí estoy si necesitas algo más.", mainOpts());
-  if(RX.hola.test(s)) return botStart();
-  // 7. Fuera de tema o no entendido
-  botSay("Mmm, no te entendí bien 🤔 o es un tema con el que no puedo ayudarte. Solo sé de <b>Burger Ribs</b>: pedidos, la carta, domicilios, horarios y ubicación. Elige una opción 👇", mainOpts());
-}
-
+// El cuadro de texto solo aparece cuando el bot pide un dato (dirección o nombre)
 $("#chatForm").addEventListener("submit", e => {
   e.preventDefault();
-  const v = $("#chatInput").value.trim(); if(!v) return;
+  const v = $("#chatInput").value.trim(); if(!v || !expecting) return;
   $("#chatInput").value = ""; userSay(v);
-  if(expecting){ const f=expecting; expecting=null; f(v); } else botFree(v);
+  const f = expecting; expecting = null; $("#chatForm").classList.remove("on"); f(v);
 });
 function openChat(){ $("#chat").classList.add("on"); $("#fabHint").style.display="none"; closeCart(); if(!started){ started=true; botStart(); } }
 function closeChat(){ $("#chat").classList.remove("on"); }
