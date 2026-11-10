@@ -820,7 +820,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 120px;background:#080706}
   </div>
   <div class="msgs" id="msgs"></div>
   <form class="chat-in" id="chatForm">
-    <input id="chatInput" placeholder="Escribe aquí…" autocomplete="off">
+    <input id="chatInput" placeholder="Escribe tu pregunta o elige una opción…" autocomplete="off">
     <button aria-label="Enviar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
   </form>
 </div>
@@ -1163,48 +1163,77 @@ function botSay(html, opts=[], expect=null){
     scrollChat(); res();
   }, 550));
 }
+/* ---------- menú principal ---------- */
 const mainOpts = () => [
   { l:"🍔 Hacer un pedido", fn:botCategorias },
+  { l:"✨ Recomiéndame algo", fn:botRecomendar },
+  ...(cart.length ? [{ l:`🧾 Mi carrito (${cartQty()})`, fn:()=>botEditCart() }] : []),
   { l:"📦 Estado de mi pedido", fn:botEstado },
-  { l:"📋 Ver la carta", fn:()=>{ closeChat(); location.hash="#carta"; } },
-  { l:"📍 ¿Dónde están?", fn:botUbicacion },
-  { l:"🕒 Horarios", fn:()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, mainOpts()) },
-  { l:"💬 Hablar con alguien", fn:()=>{ window.open(waLink("¡Hola Burger Ribs! Tengo una pregunta 🙂"),"_blank"); botSay("Te abrí WhatsApp para que hables directo con el equipo 👌", mainOpts()); } },
+  { l:"❓ Preguntas frecuentes", fn:botFAQ },
+  { l:"💬 Hablar con una persona", fn:()=>botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo") },
 ];
-function botStart(){ botSay("¡Hola! 👋 Soy el asistente de <b>Burger Ribs</b>. ¿Qué se te antoja hoy?", mainOpts()); }
-function botCategorias(){
-  botSay("¡Buenísimo! ¿Qué te provoca?", MENU.map(c=>({ l:c.nombre, fn:()=>botItems(c) })));
+function botStart(){ botSay("¡Hola! 👋 Soy el asistente de <b>Burger Ribs</b>. Elige una opción o escríbeme tu pregunta:", mainOpts()); }
+
+/* ---------- carta y productos ---------- */
+function botCategorias(intro){
+  botSay(intro || "¡Buenísimo! ¿Qué te provoca? 😋", [...MENU.map(c=>({ l:c.nombre, fn:()=>botItems(c) })), { l:"✨ Mejor recomiéndame", fn:botRecomendar }]);
 }
 function botItems(c){
-  botSay(`Estas son nuestras <b>${c.nombre.toLowerCase()}</b>:`,
-    [...c.items.map(i=>({ l:`${i.n} · ${money(i.p)}`, fn:()=>botPick(i) })), { l:"⬅ Otra categoría", fn:botCategorias }]);
+  botSay(`Estas son nuestras <b>${c.nombre.toLowerCase()}</b>. Toca una para ver qué trae 👇`,
+    [...c.items.map(i=>({ l:`${i.n} · ${money(i.p)}`, fn:()=>botInfo(i) })), { l:"⬅ Otra categoría", fn:()=>botCategorias() }]);
+}
+function botInfo(i){
+  const cat = MENU.find(c => c.id === ITEMS[i.id].cat);
+  const desc = i.d || "Bien fría para acompañar tu pedido 🧊";
+  botSay(`<b>${i.n}</b> · <b style="color:var(--gold)">${money(i.p)}</b><br>${desc}${i.combo?`<br><small style="color:var(--muted)">Servida en pan brioche sellado con mantequilla. Hazla combo por +${money(CONFIG.combo)} 🍟</small>`:""}`, [
+    { l:"✅ Agregar al pedido", fn:()=>botPick(i) },
+    { l:`⬅ Volver a ${cat.nombre}`, fn:()=>botItems(cat) },
+    { l:"🏠 Menú principal", fn:botStart },
+  ]);
 }
 function botPick(i){
   if(i.combo){
-    botSay(`La <b>${i.n}</b> es una gran elección 🔥<br>¿La hacemos <b>combo</b> por +${money(CONFIG.combo)}? Incluye gaseosa + acompañante.`, [
+    botSay(`¿Hacemos la <b>${i.n}</b> en <b>combo</b> por +${money(CONFIG.combo)}? Incluye gaseosa + acompañante.`, [
       { l:"Sí, combo 🍟", fn:()=>botSay("¿Con qué acompañante?", CONFIG.acompanantes.map(a=>({ l:a, fn:()=>botAdded(i,true,a) }))) },
-      { l:"No, solo la burger", fn:()=>botAdded(i,false,null) },
+      { l:"No, solo la hamburguesa", fn:()=>botAdded(i,false,null) },
     ]);
   } else botAdded(i,false,null);
 }
 function botAdded(i, combo, side){
   addToCart(i.id, combo, side, true);
   botSay(`✅ Agregué <b>${i.n}${combo?" en combo":""}</b>.<br>Llevas ${cartQty()} producto(s) · <b>${money(cartTotal())}</b>`, [
-    { l:"➕ Agregar algo más", fn:botCategorias },
-    { l:"🧾 Ver mi pedido", fn:botResumen },
+    { l:"➕ Agregar algo más", fn:()=>botCategorias() },
+    { l:"🧾 Ver / editar mi pedido", fn:()=>botEditCart() },
     { l:"✅ Finalizar pedido", fn:botEntrega },
   ]);
 }
-function botResumen(){
-  const list = cart.map(l=>`• ${l.qty}x ${lineLabel(l)}`).join("<br>");
-  botSay(`${list}<br><br>Total: <b>${money(cartTotal())}</b>`, [
-    { l:"➕ Agregar algo más", fn:botCategorias },
-    { l:"✏️ Editar en el carrito", fn:openCart },
+
+/* ---------- editar carrito ---------- */
+function botEditCart(intro){
+  if(!cart.length) return botSay(intro ? intro + "<br>Tu carrito quedó vacío 🛒" : "Tu carrito está vacío 🛒 ¿Armamos algo?", [
+    { l:"🍔 Hacer un pedido", fn:()=>botCategorias() }, { l:"✨ Recomiéndame algo", fn:botRecomendar }, { l:"🏠 Menú principal", fn:botStart },
+  ]);
+  const list = cart.map(l=>`• ${l.qty}x ${lineLabel(l)} — ${money(unitPrice(l)*l.qty)}`).join("<br>");
+  botSay(`${intro || "Este es tu pedido:"}<br><br>${list}<br><br>Total: <b>${money(cartTotal())}</b>`, [
+    ...cart.map(l => ({ l:`➖ Quitar 1 ${ITEMS[l.id].n}${l.combo?" (combo)":""}`, fn:()=>botRemove(l.key) })),
+    { l:"🗑️ Vaciar carrito", fn:()=>{ cart.length = 0; renderCart(); botEditCart("🧹 Listo, vacié tu carrito."); } },
+    { l:"➕ Agregar algo más", fn:()=>botCategorias() },
     { l:"✅ Finalizar pedido", fn:botEntrega },
   ]);
 }
+function botRemove(key){
+  const k = cart.findIndex(l => l.key === key);
+  if(k < 0) return botEditCart();
+  const l = cart[k], name = ITEMS[l.id].n;
+  l.qty--; if(l.qty <= 0) cart.splice(k, 1);
+  renderCart();
+  botEditCart(`✅ Listo, quité 1 <b>${name}</b>.`);
+}
+const botResumen = () => botEditCart();
+
+/* ---------- finalizar pedido ---------- */
 function botEntrega(){
-  if(!cart.length) return botSay("Aún no tienes nada en tu pedido 😅", [{ l:"🍔 Ver opciones", fn:botCategorias }]);
+  if(!cart.length) return botSay("Aún no tienes nada en tu pedido 😅", [{ l:"🍔 Ver opciones", fn:()=>botCategorias() }, { l:"✨ Recomiéndame algo", fn:botRecomendar }]);
   botSay("¿Cómo lo quieres recibir?", [
     { l:"🛵 Domicilio", fn:()=>{ order.entrega="domicilio"; botSay("Escríbeme tu <b>dirección y barrio</b> 📍", [], v=>{ order.direccion=v; botNombre(); }); } },
     { l:"🏠 Recojo en el local", fn:()=>{ order.entrega="recoger"; botNombre(); } },
@@ -1213,29 +1242,139 @@ function botEntrega(){
 function botNombre(){ botSay("¿A nombre de quién va el pedido?", [], v=>{ order.nombre=v; botPago(); }); }
 function botPago(){
   botSay(`Perfecto, ${order.nombre.split(" ")[0]} 🙌 ¿Cómo vas a pagar?`,
-    ["Efectivo","Transferencia / Nequi","Datáfono"].map(p=>({ l:p, fn:()=>{ order.pago=p; renderCart(); botFinal(); } })));
+    CONFIG.pagos.map(p=>({ l:p, fn:()=>{ order.pago=p; renderCart(); botFinal(); } })));
 }
 function botFinal(){
   const list = cart.map(l=>`• ${l.qty}x ${lineLabel(l)}`).join("<br>");
   botSay(`Este es tu pedido:<br>${list}<br><br><b>Total: ${money(cartTotal())}</b>${order.entrega==="domicilio"?"<br><small style='color:var(--muted)'>+ domicilio según tu barrio</small>":""}<br><br>Toca el botón y se abre WhatsApp con todo escrito 👇`, [
     { l:"📲 Enviar por WhatsApp", wa:true, fn:()=>{ const id = finalizeOrder(true); botSay(`¡Listo! 🎉 Tu número de pedido es <b>#${id}</b>.<br>Solo dale <b>enviar</b> en WhatsApp y empezamos a prepararlo. Te avisaremos por ahí cada paso.`, [{ l:"📦 Ver seguimiento", fn:showTrack }, ...mainOpts()]); } },
-    { l:"✏️ Cambiar algo", fn:openCart },
+    { l:"✏️ Cambiar algo", fn:()=>botEditCart() },
+  ]);
+}
+
+/* ---------- recomendaciones ---------- */
+// items: [id, cantidad, combo?]
+const RECOS = {
+  top: [
+    { why:"La <b>Winner Burger</b> es la reina de la casa: 170g de res, tocineta caramelizada y salsa Winner. En combo no falla 🏆", items:[["winner",1,true]] },
+    { why:"La <b>Winner de Costilla</b> es nuestra insignia: res + costilla ahumada. Para los que lo quieren todo 🔥", items:[["winner-costilla",1,true]] },
+  ],
+  res: [
+    { why:"Te va a encantar la <b>Winner Burger</b>: 170g de res con tocineta ahumada caramelizada 🥓", items:[["winner",1,true]] },
+    { why:"La <b>Hamburguesa de Panceta</b>: ahumada, jugosa y con salsas de la casa.", items:[["panceta",1,true]] },
+  ],
+  costilla: [
+    { why:"Si eres de costilla, la <b>Winner de Costilla</b> es lo tuyo: res + costilla ahumada 🍖", items:[["winner-costilla",1,true]] },
+    { why:"La <b>Hamburguesa de Costilla</b>: 170g de costilla desmechada con el toque de la casa.", items:[["costilla",1,true]] },
+    { why:"Para los de costilla de verdad: <b>Costillas BBQ</b> con papas en casco y una limonada.", items:[["costillas-bbq",1],["lim-natural",1]] },
+  ],
+  pollo: [
+    { why:"El <b>Pollo Crunch</b>: pechuga extra crujiente con salsa de miel y pepinillos agridulces 🍗", items:[["pollo-crunch",1,true]] },
+  ],
+  clasico: [
+    { why:"<b>La Clásica</b>: carne 100% res a la parrilla y queso americano. Simple y perfecta 👌", items:[["clasica",1,true]] },
+  ],
+  perro: [
+    { why:"El <b>Perro Ranchero</b>: salchicha premium, piña caramelizada y queso fundido 🌭", items:[["perro-ranchero",1],["gaseosa",1]] },
+    { why:"El <b>Chori Perro</b> con chorizo artesanal. ¡Sabrosísimo!", items:[["chori-perro",1],["gaseosa",1]] },
+  ],
+  pareja: [
+    { why:"Para probar lo mejor de la casa: una Winner y una Winner de Costilla en combo, y deditos de mozzarella para picar 🧀", items:[["winner",1,true],["winner-costilla",1,true],["deditos",1]] },
+    { why:"Plan relajado: unas <b>Salchipapas Burger Ribs</b> al centro y dos limonadas de coco 🥥", items:[["salchipapas",1],["lim-coco",2]] },
+  ],
+  grupo: [
+    { why:"El combo del parche: la <b>Picada Burger Ribs</b> y unas <b>Salchipapas</b> al centro, con gaseosas para todos 🎉", items:[["picada",1],["salchipapas",1],["gaseosa",4]] },
+    { why:"Cada uno con su burger en combo y deditos para el centro 🍔", items:[["winner",2,true],["clasica",2,true],["deditos",1]] },
+  ],
+  economico: [
+    { why:"Rico y rendidor: <b>Perro Americano</b> con gaseosa por menos de $25.000 💰", items:[["perro-americano",1],["gaseosa",1]] },
+    { why:"<b>La Clásica</b>: 170g de res a la parrilla. La mejor relación precio-sabor.", items:[["clasica",1]] },
+    { why:"<b>Chori Perro</b> con limonada natural, sin gastar mucho.", items:[["chori-perro",1],["lim-natural",1]] },
+  ],
+  diferente: [
+    { why:"¿Y si la armas a tu gusto? En <b>Arma tu burger</b> eliges cada ingrediente y ves cómo queda 🍔", arma:true, items:[] },
+    { why:"<b>Perro Ranchero</b> con soda de sandía: dulce, salado y diferente 🍉", items:[["perro-ranchero",1],["soda",1]] },
+  ],
+};
+function botRecomendar(){
+  botSay("¡Te ayudo a elegir! 😋 ¿Para quién o qué ocasión es?", [
+    { l:"🙋 Solo para mí", fn:botGusto },
+    { l:"💑 Para dos", fn:()=>showReco("pareja") },
+    { l:"👨‍👩‍👧 Para un grupo", fn:()=>showReco("grupo") },
+    { l:"💰 Algo económico", fn:()=>showReco("economico") },
+    { l:"🏆 Lo más pedido", fn:()=>showReco("top") },
+    { l:"🤩 Algo diferente", fn:()=>showReco("diferente") },
+  ]);
+}
+function botGusto(){
+  botSay("¿Qué se te antoja más?", [
+    { l:"🥩 Res con tocineta", fn:()=>showReco("res") },
+    { l:"🍖 Costilla", fn:()=>showReco("costilla") },
+    { l:"🍗 Pollo", fn:()=>showReco("pollo") },
+    { l:"🍔 Algo clásico", fn:()=>showReco("clasico") },
+    { l:"🌭 Perro caliente", fn:()=>showReco("perro") },
+  ]);
+}
+const recoTotal = r => r.items.reduce((s,[id,q,c]) => s + (ITEMS[id].p + (c ? CONFIG.combo : 0)) * q, 0);
+function showReco(key, i=0){
+  const list = RECOS[key], r = list[i % list.length];
+  const lines = r.items.map(([id,q,c]) => `• ${q}x ${ITEMS[id].n}${c?" (combo)":""}`).join("<br>");
+  botSay(`${r.why}${lines ? `<br><br>${lines}<br>Total: <b>${money(recoTotal(r))}</b>` : ""}`, [
+    r.arma ? { l:"🍔 Ir a Arma tu burger", fn:()=>{ closeChat(); location.hash="#arma"; } } : { l:"✅ Agregar todo al pedido", fn:()=>addReco(r) },
+    ...(list.length > 1 ? [{ l:"🔄 Ver otra opción", fn:()=>showReco(key, i+1) }] : []),
+    { l:"✨ Otra ocasión", fn:botRecomendar },
+    { l:"🏠 Menú principal", fn:botStart },
+  ]);
+}
+function addReco(r){
+  r.items.forEach(([id,q,c]) => { for(let k=0; k<q; k++) addToCart(id, !!c, c ? CONFIG.acompanantes[0] : null, true); });
+  const nota = r.items.some(x => x[2]) ? `<br><small style="color:var(--muted)">Los combos van con ${CONFIG.acompanantes[0].toLowerCase()}; si prefieres otro acompañante, escríbelo en las notas.</small>` : "";
+  botSay(`✅ ¡Listo! Lo agregué a tu pedido.${nota}<br>Llevas ${cartQty()} producto(s) · <b>${money(cartTotal())}</b>`, [
+    { l:"✅ Finalizar pedido", fn:botEntrega },
+    { l:"🧾 Ver / editar mi pedido", fn:()=>botEditCart() },
+    { l:"➕ Agregar algo más", fn:()=>botCategorias() },
+  ]);
+}
+
+/* ---------- preguntas frecuentes ---------- */
+const backOpts = () => [{ l:"❓ Otra pregunta", fn:botFAQ }, { l:"🍔 Hacer un pedido", fn:()=>botCategorias() }, { l:"🏠 Menú principal", fn:botStart }];
+const FAQ = {
+  domicilio: ()=>botSay("El valor del domicilio depende de tu barrio 📍 Te lo confirmamos por WhatsApp apenas recibamos tu pedido.", backOpts()),
+  zonas: ()=>botSay("Hacemos domicilios en Manizales 🛵 (zonas por confirmar). Al enviar tu pedido te confirmamos si llegamos a tu barrio y el valor.", backOpts()),
+  tiempo: ()=>botSay(`Normalmente tu pedido llega ${CONFIG.tiempoEntrega} ⏱️ En horas pico puede tardar un poco más.`, backOpts()),
+  pagos: ()=>botSay(`Puedes pagar con: <b>${CONFIG.pagos.join(", ")}</b> 💳`, backOpts()),
+  horario: ()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b> 🕒`, backOpts()),
+  combo: ()=>botSay(`Cualquier hamburguesa la puedes volver <b>combo por +${money(CONFIG.combo)}</b>: incluye gaseosa + papas francesas, en casco, aros de cebolla o yuquitas 🍟`, [{ l:"🍔 Ver hamburguesas", fn:()=>botItems(MENU[0]) }, ...backOpts()]),
+  alergias: ()=>botHumano("Puedes escribir tus indicaciones (sin cebolla, salsa aparte…) en las <b>notas del pedido</b> 📝 Si tienes una alergia, confírmalo con el equipo:", "Hola Burger Ribs, tengo una pregunta sobre ingredientes"),
+  factura: ()=>botHumano("Para factura electrónica, envíanos tus datos por WhatsApp 🧾", "Hola Burger Ribs, necesito factura electrónica"),
+};
+function botFAQ(){
+  botSay("¿Qué quieres saber? 🤔", [
+    { l:"🛵 ¿Cuánto vale el domicilio?", fn:FAQ.domicilio },
+    { l:"📍 ¿A qué barrios llegan?", fn:FAQ.zonas },
+    { l:"⏱️ ¿Cuánto se demora?", fn:FAQ.tiempo },
+    { l:"💳 ¿Cómo puedo pagar?", fn:FAQ.pagos },
+    { l:"🕒 Horario", fn:FAQ.horario },
+    { l:"🗺️ ¿Dónde están?", fn:botUbicacion },
+    { l:"🍟 ¿Qué incluye el combo?", fn:FAQ.combo },
+    { l:"🥗 Alergias o cambios", fn:FAQ.alergias },
+    { l:"🏠 Menú principal", fn:botStart },
   ]);
 }
 function botUbicacion(){
   botSay(`Estamos en <b>${CONFIG.direccion}</b> 📍`, [
     { l:"🗺️ Abrir ruta", fn:()=>{ window.open($("#gmapsDir").href,"_blank"); botStart(); } },
     { l:"👀 Ver el mapa aquí", fn:()=>{ closeChat(); location.hash="#ubicacion"; } },
-    { l:"⬅ Menú principal", fn:botStart },
+    { l:"🏠 Menú principal", fn:botStart },
   ]);
 }
 function botEstado(){
-  if(!lastOrder) return botSay("Aún no tienes pedidos hechos desde aquí. ¿Armamos uno? 🍔", [{ l:"🍔 Hacer un pedido", fn:botCategorias }, { l:"⬅ Menú principal", fn:botStart }]);
+  if(!lastOrder) return botSay("Aún no tienes pedidos hechos desde aquí. ¿Armamos uno? 🍔", [{ l:"🍔 Hacer un pedido", fn:()=>botCategorias() }, { l:"🏠 Menú principal", fn:botStart }]);
   const st = stagesFor(lastOrder)[currentStage(lastOrder)];
   botSay(`Tu pedido <b>#${lastOrder.id}</b> está: <b>${st.i} ${st.n}</b><br><small style="color:var(--muted)">${st.d}</small>`, [
     { l:"📦 Ver seguimiento", fn:showTrack },
     { l:"💬 Preguntar al restaurante", fn:()=>{ window.open(waLink(`Hola Burger Ribs 👋 Quiero saber el estado de mi pedido #${lastOrder.id}`),"_blank"); botStart(); } },
-    { l:"⬅ Menú principal", fn:botStart },
+    { l:"🏠 Menú principal", fn:botStart },
   ]);
 }
 // Pasa el caso a una persona por WhatsApp (con el número de pedido si existe)
@@ -1243,38 +1382,119 @@ function botHumano(intro, msg){
   const ref = lastOrder ? ` (pedido #${lastOrder.id})` : "";
   botSay(intro, [
     { l:"💬 Escribir al restaurante", wa:true, fn:()=>{ window.open(waLink(msg + ref),"_blank"); botSay("Te abrí WhatsApp para que te atienda una persona del equipo 👌", mainOpts()); } },
-    { l:"⬅ Menú principal", fn:botStart },
+    { l:"🏠 Menú principal", fn:botStart },
   ]);
 }
-/* Filtro de temas: solo responde sobre el negocio.
-   Cada regla: palabras clave -> respuesta. Lo que no coincida se rechaza amablemente. */
-const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-const REGLAS = [
-  { k:/cancel|cambiar (el |mi )?pedido|modificar|agregar (algo )?al pedido|quitar (algo )?del pedido/, fn:()=>botHumano("Para cambiar o cancelar un pedido ya enviado, escríbenos directo y lo ajustamos de una 👇", "Hola Burger Ribs, quiero hacer un cambio en mi pedido") },
-  { k:/queja|reclamo|llego (frio|mal|incompleto|tarde)|no llego|falto|problema|mal estado|equivocad/, fn:()=>botHumano("Lamentamos mucho lo que pasó 😔 Cuéntale al equipo y lo solucionamos lo antes posible.", "Hola Burger Ribs, tuve un problema con mi pedido") },
-  { k:/estado|mi pedido|mi orden|donde (esta|va)|ya (viene|sale|salio)|#?br-?\d|numero de pedido|seguimiento|rastrear/, fn:botEstado },
-  { k:/cuanto (vale|cuesta|cobran) (el )?domicilio|valor (del )?domicilio|costo (del )?domicilio|precio (del )?domicilio/, fn:()=>botSay("El valor del domicilio depende de tu barrio 📍 Te lo confirmamos por WhatsApp apenas recibamos tu pedido.", mainOpts()) },
-  { k:/llegan|cobertura|zona|barrio|hasta donde|a domicilio|domicilios/, fn:()=>botSay("Hacemos domicilios en Manizales 🛵 (zonas por confirmar). Al enviar tu pedido te confirmamos si llegamos a tu barrio y el valor.", [{ l:"🍔 Hacer un pedido", fn:botCategorias }, ...mainOpts().slice(2)]) },
-  { k:/demora|tarda|cuanto tiempo|tiempo de entrega|rapido/, fn:()=>botSay(`Normalmente tu pedido llega ${CONFIG.tiempoEntrega} ⏱️ En horas pico puede tardar un poco más.`, mainOpts()) },
-  { k:/\bpag(o|ar|an|os)\b|nequi|daviplata|tarjeta|efectivo|transferencia|datafono|bancolombia/, fn:()=>botSay(`Puedes pagar con: <b>${CONFIG.pagos.join(", ")}</b> 💳`, mainOpts()) },
-  { k:/\bhora|abren|cierran|abierto|atienden|domingo|festivo/, fn:()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, mainOpts()) },
-  { k:/donde|direcci|ubica|llegar|queda|local|mapa/, fn:botUbicacion },
-  { k:/combo/, fn:()=>botSay(`Cualquier hamburguesa la puedes volver <b>combo por +${money(CONFIG.combo)}</b>: incluye gaseosa + papas francesas, en casco, aros de cebolla o yuquitas 🍟`, [{ l:"🍔 Ver hamburguesas", fn:()=>botItems(MENU[0]) }, ...mainOpts().slice(1)]) },
-  { k:/recomi|la mas pedida|cual (me )?(pido|recomiendas)|la mejor (burger|hamburguesa)|favorit/, fn:()=>botSay("La más pedida es la <b>Winner Burger</b> 🏆 y la insignia de la casa es la <b>Winner de Costilla</b>. ¡No fallan!", [{ l:"Pedir Winner Burger", fn:()=>botPick(ITEMS["winner"]) }, { l:"Pedir Winner de Costilla", fn:()=>botPick(ITEMS["winner-costilla"]) }, { l:"⬅ Menú principal", fn:botStart }]) },
-  { k:/alergi|gluten|vegetarian|vegan|sin (cebolla|tomate|salsa|lechuga)|picante|ingrediente/, fn:()=>botHumano("Puedes escribir tus indicaciones en las <b>notas del pedido</b> 📝 Si tienes una alergia, mejor confírmalo con el equipo:", "Hola Burger Ribs, tengo una pregunta sobre ingredientes") },
-  { k:/factura|nit|electronica/, fn:()=>botHumano("Para factura electrónica, envíanos tus datos por WhatsApp 🧾", "Hola Burger Ribs, necesito factura electrónica") },
-  { k:/carta|menu|precio|cuanto (vale|cuesta)|hamburgues|burger|costilla|ribs|perro|salchipapa|picada|bebida|limonada|cerveza|entrada|pedir|antoj|tienen/, fn:botCategorias },
-  { k:/arma|personaliz|a mi gusto/, fn:()=>{ closeChat(); location.hash="#arma"; } },
-  { k:/gracias|listo|perfecto|genial|bacano|chevere/, fn:()=>botSay("¡Con gusto! 🙌 Aquí estoy si necesitas algo más.", mainOpts()) },
-  { k:/^(hola|buenas|buenos|hey|ola|saludos)/, fn:botStart },
-  { k:/persona|humano|asesor|operador|alguien|hablar/, fn:()=>botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo") },
+
+/* ---------- texto libre: entiende productos e intenciones del negocio ---------- */
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[¿?¡!.,]/g, " ").replace(/\s+/g, " ").trim();
+// Nombres con los que la gente pide cada producto (el orden importa: lo más específico primero)
+const ALIAS = [
+  ["winner-costilla", /winner (burger )?(de )?costilla/],
+  ["winner", /winner/],
+  ["costillas-bbq", /costillas? bbq|costillas\b/],
+  ["costilla", /costilla/],
+  ["panceta", /panceta/],
+  ["pollo-crunch", /pollo|crunch/],
+  ["clasica", /clasica/],
+  ["salchipapas", /salchipapa/],
+  ["picada", /picada/],
+  ["chori-perro", /chori ?perro/],
+  ["perro-ranchero", /ranchero/],
+  ["perro-americano", /perro americano/],
+  ["deditos", /dedito|mozzarella/],
+  ["maduritos", /madurito|maduro/],
+  ["chorizo", /chorizo/],
+  ["lim-cereza-coco", /cereza (de )?coco/],
+  ["lim-coco", /limonada de coco|\bcoco\b/],
+  ["lim-mango", /mango/],
+  ["lim-cereza", /cereza/],
+  ["lim-natural", /limonada( natural)?\b/],
+  ["soda", /soda/],
+  ["tres-cord", /tres cordilleras/],
+  ["corona", /corona/],
+  ["club-dorada", /dorada/],
+  ["club-negra", /club colombia negra|\bnegra\b/],
+  ["hatsu", /hatsu|\bte (verde|frio|hatsu)\b/],
+  ["gaseosa", /gaseosa|coca ?cola|\bcoca\b/],
+  ["agua", /\bagua\b/],
 ];
+const findItem = s => { const a = ALIAS.find(([, re]) => re.test(s)); return a ? ITEMS[a[0]] : null; };
+const RX = {
+  quitar: /\b(quita|quitar|quitame|quitale|elimina|eliminar|eliminame|borra|borrar|borrame|saca|sacar|sacame|retira|retirar|remueve|remover)\b|me sobra|cancelar (un|una|uno|el|la|1|articulo|producto|item)|tengo (dos|2|doble)|(una|uno) de mas|solo (quiero )?(una|uno|1)\b/,
+  editar: /carrito|editar|modificar|cambiar (el |mi )?pedido/,
+  cancelar: /cancel/,
+  reclamo: /queja|reclamo|llego (frio|mal|incompleto|tarde)|no (me )?llego|falto|mal estado|equivocad|problema con/,
+  estado: /estado|donde (esta|va)\b|ya (viene|sale|salio)|br-?\d|numero de pedido|seguimiento|rastrear|cuando llega/,
+  info: /que (trae|tiene|lleva|contiene|viene|incluye)|de que (es|esta|son|viene)|ingrediente|como (es|son|viene)|descripcion|hecha|hecho/,
+  barato: /barat|economic|poca plata|poco dinero|presupuesto|no tengo mucha|sencillo|menos de/,
+  pareja: /para (dos|2)\b|pareja|novi[oa]|esposa|esposo|\bcita\b/,
+  grupo: /amigos|familia|grupo|varios|parche|reunion|para (3|4|5|6|tres|cuatro|cinco|seis)\b/,
+  reco: /recomi|no se que (pedir|comer)|sugier|sugerencia|que (me )?(pido|como)\b|indecis|la mas pedida|la mejor|favorit|lo mas rico|no se que/,
+  domicilio: /(cuanto|valor|costo|precio|vale|cobran).*(domicilio|envio)|(domicilio|envio).*(cuanto|vale|cuesta|cobran|valor|costo)/,
+  zonas: /llegan|cobertura|zona|barrio|hasta donde|hacen domicilio/,
+  tiempo: /demora|tarda|cuanto tiempo|tiempo de entrega|rapido/,
+  pagos: /\bpag(o|ar|an|os)\b|nequi|daviplata|tarjeta|efectivo|transferencia|datafono|bancolombia/,
+  horario: /\bhora|abren|cierran|abierto|atienden|domingo|festivo/,
+  ubicacion: /donde (estan|quedan|queda)|direcci|ubica|como llego|llegar|mapa|\blocal\b/,
+  combo: /combo/,
+  alergias: /alergi|gluten|vegetarian|vegan|sin (cebolla|tomate|salsa|lechuga|pepinillo)|picante/,
+  factura: /factura|\bnit\b|electronica/,
+  arma: /arma|personaliz|a mi gusto/,
+  carta: /carta|menu|precio|cuanto (vale|cuesta)|hamburgues|burger|perro|bebida|cerveza|entrada|pedir|antoj|tienen|ordenar|comprar|comida/,
+  gracias: /gracias|^listo|perfecto|genial|bacano|chevere|^ok\b|^vale\b/,
+  hola: /^(hola|buenas|buenos|hey|ola|saludos|que mas|q mas)/,
+  persona: /persona|humano|asesor|operador|alguien|hablar con/,
+  faq: /pregunta|duda/,
+};
 function botFree(t){
-  const s = norm(t);
-  const r = REGLAS.find(r => r.k.test(s));
-  if(r) return r.fn();
-  botSay("Uy, con eso no te puedo ayudar 😅 Solo sé de <b>Burger Ribs</b>: pedidos, la carta, domicilios, horarios y ubicación. ¿Te ayudo con algo de eso?", mainOpts());
+  const s = norm(t), item = findItem(s);
+  // 1. Quitar o editar productos del carrito (antes de enviar el pedido)
+  if(RX.quitar.test(s) || ((RX.cancelar.test(s) || RX.editar.test(s)) && cart.length)){
+    if(!cart.length) return lastOrder
+      ? botHumano("Tu pedido ya fue enviado. Para cambiarlo, escríbele al equipo y lo ajustamos 👇", "Hola Burger Ribs, quiero hacer un cambio en mi pedido")
+      : botSay("Tu carrito está vacío, no hay nada que quitar 🙂", mainOpts());
+    if(item){
+      const l = cart.find(l => l.id === item.id);
+      return l ? botRemove(l.key) : botEditCart(`No tienes <b>${item.n}</b> en tu pedido 🤔 Esto es lo que llevas:`);
+    }
+    return botEditCart("Claro 👌 Toca lo que quieras quitar:");
+  }
+  // 2. Cancelar o cambiar un pedido ya enviado
+  if(RX.cancelar.test(s) || RX.editar.test(s)) return lastOrder
+    ? botHumano("Para cambiar o cancelar un pedido ya enviado, escríbenos directo y lo ajustamos de una 👇", "Hola Burger Ribs, quiero cancelar o cambiar mi pedido")
+    : botSay("Aún no has enviado ningún pedido 🙂 ¿Te ayudo a armar uno?", mainOpts());
+  if(RX.reclamo.test(s)) return botHumano("Lamentamos mucho lo que pasó 😔 Cuéntale al equipo y lo solucionamos lo antes posible.", "Hola Burger Ribs, tuve un problema con mi pedido");
+  if(RX.estado.test(s)) return botEstado();
+  // 3. Qué trae un producto
+  if(RX.info.test(s)) return item ? botInfo(item) : botCategorias("¿De cuál producto quieres saber? Elige la categoría y te cuento qué trae 👇");
+  // 4. Recomendaciones según ocasión o presupuesto
+  if(RX.barato.test(s)) return showReco("economico");
+  if(RX.pareja.test(s)) return showReco("pareja");
+  if(RX.grupo.test(s)) return showReco("grupo");
+  if(RX.reco.test(s)) return botRecomendar();
+  // 5. Preguntas del negocio
+  if(RX.domicilio.test(s)) return FAQ.domicilio();
+  if(RX.zonas.test(s)) return FAQ.zonas();
+  if(RX.tiempo.test(s)) return FAQ.tiempo();
+  if(RX.pagos.test(s)) return FAQ.pagos();
+  if(RX.horario.test(s)) return FAQ.horario();
+  if(RX.ubicacion.test(s)) return botUbicacion();
+  if(RX.combo.test(s)) return FAQ.combo();
+  if(RX.alergias.test(s)) return FAQ.alergias();
+  if(RX.factura.test(s)) return FAQ.factura();
+  // 6. Mencionó un producto ("quiero una winner", "tienen salchipapas")
+  if(item) return botInfo(item);
+  if(RX.arma.test(s)) { closeChat(); location.hash = "#arma"; return; }
+  if(RX.carta.test(s)) return botCategorias();
+  if(RX.persona.test(s)) return botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo");
+  if(RX.faq.test(s)) return botFAQ();
+  if(RX.gracias.test(s)) return botSay("¡Con gusto! 🙌 Aquí estoy si necesitas algo más.", mainOpts());
+  if(RX.hola.test(s)) return botStart();
+  // 7. Fuera de tema o no entendido
+  botSay("Mmm, no te entendí bien 🤔 o es un tema con el que no puedo ayudarte. Solo sé de <b>Burger Ribs</b>: pedidos, la carta, domicilios, horarios y ubicación. Elige una opción 👇", mainOpts());
 }
+
 $("#chatForm").addEventListener("submit", e => {
   e.preventDefault();
   const v = $("#chatInput").value.trim(); if(!v) return;
