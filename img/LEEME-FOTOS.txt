@@ -1,0 +1,29 @@
+CÓMO PONER LAS FOTOS EN LA PÁGINA DE BURGER RIBS
+=================================================
+
+Guarda cada foto en ESTA carpeta (img) con el nombre EXACTO de la lista,
+reemplazando la que está. La página la toma sola.
+
+Recomendado: .jpg, horizontal (4:3), mínimo 1200 px de ancho.
+
+DE INSTAGRAM (cambiar por las oficiales en alta calidad):
+  winner.jpg            -> Winner Burger (también portada y "Qué ofrecemos")
+  winner-costilla.jpg   -> Winner Burger de Costilla (también "Quiénes somos")
+  salchipapas.jpg       -> Salchipapas Burger Ribs (también el destacado)
+
+DE STOCK, REFERENCIA PARA EL BOCETO (Unsplash, uso libre) - cambiar por fotos reales:
+  panceta.jpg           -> Hamburguesa de Panceta
+  costilla.jpg          -> Hamburguesa de Costilla
+  pollo-crunch.jpg      -> Pollo Crunch
+  clasica.jpg           -> La Clásica
+  picada.jpg            -> Picada Burger Ribs
+  costillas-bbq.jpg     -> Costillas BBQ
+  perro-ranchero.jpg    -> Perro Ranchero
+  perro-americano.jpg   -> Perro Americano
+  chori-perro.jpg       -> Chori Perro (es la del ranchero volteada: cambiar)
+  deditos.jpg           -> Deditos de Mozzarella
+  chorizo.jpg           -> Chorizo Artesanal
+  domicilio.jpg         -> Foto del domiciliario en la sección Domicilios
+
+FALTA (se muestra un ícono mientras tanto):
+  maduritos.jpg         -> Maduritos Gratinados
