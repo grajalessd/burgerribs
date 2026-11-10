@@ -1,0 +1,47 @@
+RESPUESTAS RÁPIDAS PARA WHATSAPP BUSINESS — BURGER RIBS
+========================================================
+
+Cómo configurarlas (app WhatsApp Business, gratis):
+  Ajustes > Herramientas para la empresa > Respuestas rápidas > (+)
+  Pones el atajo (ej. /recibido) y el mensaje. Al escribir "/" en un chat
+  te aparecen todas. Cambia [NÚMERO], [VALOR], etc. antes de enviar.
+
+Etiquetas recomendadas (Herramientas > Etiquetas), una por etapa:
+  🟡 Nuevo   🔵 Confirmado   🟠 En preparación   🟣 En camino   🟢 Entregado
+Así ves de un vistazo en qué va cada pedido.
+
+--------------------------------------------------------
+/recibido
+¡Hola! 👋 Recibimos tu pedido #[NÚMERO]. Lo estamos revisando y en un momento te confirmamos el total.
+
+/confirmado
+✅ Pedido #[NÚMERO] confirmado.
+Productos: $[VALOR]
+Domicilio: $[VALOR]
+*Total a pagar: $[TOTAL]*
+Tiempo estimado: [30-45] minutos. ¡Ya empezamos a prepararlo!
+
+/preparando
+🔥 Tu pedido #[NÚMERO] ya está en la plancha. Te avisamos cuando salga.
+
+/encamino
+🛵 ¡Tu pedido #[NÚMERO] va en camino! Llega en aprox. [15] minutos. Ten listo el pago, por favor.
+
+/listo
+🛍️ Tu pedido #[NÚMERO] está listo para recoger en Calle 69 # 26A-09, Palermo. ¡Te esperamos!
+
+/entregado
+✅ ¡Pedido #[NÚMERO] entregado! Gracias por elegir Burger Ribs 🍔 ¿Cómo estuvo todo? Tu opinión nos ayuda mucho.
+
+/pago
+Puedes pagar con:
+• Efectivo
+• Nequi: [NÚMERO NEQUI]
+• Transferencia Bancolombia: [CUENTA]
+Envíanos el comprobante por aquí 🙏
+
+/fueradezona
+Uy, lo sentimos 😔 por ahora no llegamos a ese barrio. Puedes recoger tu pedido en Calle 69 # 26A-09, Palermo.
+
+/demora
+Mil disculpas por la espera 🙏 Tenemos alta demanda y tu pedido #[NÚMERO] sale en [10] minutos.

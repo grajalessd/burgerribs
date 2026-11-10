@@ -334,6 +334,37 @@ footer{border-top:1px solid var(--line);padding:60px 0 120px;background:#080706}
 .tot-note{font-size:.76rem;color:var(--muted);margin-bottom:14px}
 .drawer-foot .btn{width:100%}
 
+/* Seguimiento de pedido */
+.track-wrap{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.7);display:grid;place-items:center;padding:16px;opacity:0;pointer-events:none;transition:.3s}
+.track-wrap.on{opacity:1;pointer-events:auto}
+.track{width:min(440px,100%);max-height:calc(100vh - 32px);overflow-y:auto;background:var(--bg-2);border:1px solid var(--gold-dim);border-radius:24px;padding:26px 24px;transform:translateY(16px) scale(.97);transition:.3s;box-shadow:0 40px 80px -20px #000}
+.track-wrap.on .track{transform:none}
+.track-top{text-align:center}
+.track-top .ok{width:64px;height:64px;border-radius:50%;background:rgba(37,211,102,.15);color:var(--wa);display:grid;place-items:center;margin:0 auto 12px;font-size:1.9rem}
+.track-top h3{font-family:"Bebas Neue";font-weight:400;font-size:2.1rem;line-height:1}
+.track-top p{color:var(--muted);font-size:.86rem;margin-top:6px}
+.order-id{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px 0 4px}
+.order-id b{font-family:"Bebas Neue";font-weight:400;font-size:2.2rem;color:var(--gold);letter-spacing:.06em}
+.order-id button{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.76rem;color:var(--muted)}
+.demo-tag{display:block;text-align:center;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin-bottom:16px}
+.steps-v{list-style:none;margin:8px 0 18px;position:relative}
+.steps-v li{display:flex;gap:14px;align-items:flex-start;padding:0 0 18px;position:relative;color:#6b6155;transition:color .4s}
+.steps-v li:not(:last-child)::after{content:"";position:absolute;left:15px;top:32px;bottom:2px;width:2px;background:var(--line)}
+.steps-v li.done:not(:last-child)::after{background:var(--wa)}
+.steps-v .dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex-shrink:0;font-size:.95rem;background:var(--bg);transition:.4s}
+.steps-v li.done{color:var(--cream)}
+.steps-v li.done .dot{border-color:var(--wa);background:rgba(37,211,102,.15)}
+.steps-v li.now{color:var(--cream)}
+.steps-v li.now .dot{border-color:var(--gold);background:rgba(212,166,74,.18);animation:ping2 1.6s infinite}
+@keyframes ping2{50%{box-shadow:0 0 0 7px rgba(212,166,74,.12)}}
+.steps-v b{display:block;font-size:.92rem;font-weight:600}
+.steps-v small{font-size:.78rem;color:var(--muted)}
+.track-sum{border-top:1px dashed var(--line);padding-top:14px;font-size:.84rem;color:var(--muted);margin-bottom:16px}
+.track-sum div{display:flex;justify-content:space-between;gap:10px;padding:2px 0}
+.track-sum .tt{color:var(--cream);font-weight:600;margin-top:6px}
+.track-btns{display:grid;gap:10px}
+.track-btns .btn{width:100%}
+
 /* Toast */
 .toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,30px);background:var(--cream);color:#1a1206;padding:12px 20px;border-radius:999px;font-weight:600;font-size:.88rem;z-index:80;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -746,6 +777,7 @@ footer{border-top:1px solid var(--line);padding:60px 0 120px;background:#080706}
       <button class="qa-tile" data-qa-act="cart"><span class="ic">🛍️</span><b>Mi pedido</b><small id="qaCart">Vacío</small></button>
       <a href="#arma" class="qa-tile" data-qa><span class="ic">🍔</span><b>Arma tu burger</b><small>A tu gusto</small></a>
       <a href="#domicilios" class="qa-tile" data-qa><span class="ic">🛵</span><b>Domicilios</b><small>Cómo pedir en 3 pasos</small></a>
+      <button class="qa-tile wide" data-qa-act="track"><span class="ic">📦</span><div><b>Seguir mi pedido</b><br><small id="qaTrack">Aún no has hecho pedidos</small></div><span>→</span></button>
     </div>
 
     <div class="qa-label">Ir directo a la carta</div>
@@ -793,6 +825,11 @@ footer{border-top:1px solid var(--line);padding:60px 0 120px;background:#080706}
   </form>
 </div>
 
+<!-- Seguimiento del pedido -->
+<div class="track-wrap" id="trackWrap" role="dialog" aria-label="Seguimiento de tu pedido">
+  <div class="track" id="track"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -808,6 +845,8 @@ const CONFIG = {
     "Referencia 1 por confirmar (ej. frente a…)",
     "Referencia 2 por confirmar (ej. a 2 cuadras de…)",
   ],
+  tiempoEntrega: "entre 30 y 45 minutos (ejemplo, por confirmar)",
+  pagos: ["Efectivo","Transferencia / Nequi","Datáfono"],
   combo: 9000,
   acompanantes: ["Papas francesas", "Papas en casco", "Aros de cebolla", "Yuquitas"],
 };
@@ -965,21 +1004,90 @@ function renderCart(){
   $("#drawerFoot").innerHTML = `
     <div class="tot"><span>Total</span><b>${money(cartTotal())}</b></div>
     <div class="tot-note">${order.entrega==="domicilio"?"El valor del domicilio se confirma por WhatsApp según tu barrio.":"Te avisamos cuando esté listo para recoger."}</div>
-    <a class="btn btn-wa" id="sendOrder" target="_blank" rel="noopener">
+    <button class="btn btn-wa" id="sendOrder">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
-      Enviar pedido por WhatsApp</a>`;
-  $("#sendOrder").href = waLink(orderText());
+      Enviar pedido por WhatsApp</button>`;
+  $("#sendOrder").onclick = () => finalizeOrder(false);
 }
 function orderText(){
-  let t = `¡Hola Burger Ribs! 🍔 Quiero hacer este pedido:\n\n`;
+  let t = `¡Hola Burger Ribs! 🍔\n*PEDIDO #${order.id}*\n\nQuiero hacer este pedido:\n\n`;
   cart.forEach(l => t += `• ${l.qty}x ${lineLabel(l)} — ${money(unitPrice(l)*l.qty)}\n`);
   t += `\n*Total productos: ${money(cartTotal())}*\n`;
   t += order.entrega==="domicilio" ? `🛵 Domicilio a: ${order.direccion||"(por indicar)"}\n` : `🏠 Recojo en el local\n`;
   if(order.nombre) t += `👤 Nombre: ${order.nombre}\n`;
   t += `💳 Pago: ${order.pago}\n`;
   if(order.notas) t += `📝 Notas: ${order.notas}\n`;
+  t += `\n(Guarda este número para seguir tu pedido)`;
   return t;
 }
+
+/* ===================== número de pedido + seguimiento ===================== */
+let lastOrder = null;
+try { lastOrder = JSON.parse(localStorage.getItem("br_last_order")); } catch(e) {}
+function genId(){
+  const d = new Date();
+  return "BR-" + String(d.getDate()).padStart(2,"0") + String(d.getMonth()+1).padStart(2,"0") + "-" + Math.floor(1000 + Math.random()*9000);
+}
+function finalizeOrder(fromBot){
+  if(!cart.length) return null;
+  order.id = genId();
+  window.open(waLink(orderText()), "_blank");
+  lastOrder = {
+    id: order.id, t: Date.now(), entrega: order.entrega, total: cartTotal(),
+    items: cart.map(l => ({ label: lineLabel(l), qty: l.qty, total: unitPrice(l)*l.qty })),
+  };
+  try { localStorage.setItem("br_last_order", JSON.stringify(lastOrder)); } catch(e) {}
+  cart.length = 0; renderCart(); closeCart();
+  if(!fromBot) showTrack();
+  return lastOrder.id;
+}
+// Etapas. "seg" = segundos para avanzar en la SIMULACIÓN.
+// En la versión real, cada etapa la marca el restaurante.
+function stagesFor(o){
+  const fin = o.entrega === "domicilio"
+    ? [{ i:"🛵", n:"En camino", d:"El domiciliario va hacia tu dirección", seg:45 }, { i:"✅", n:"Entregado", d:"¡Buen provecho!", seg:75 }]
+    : [{ i:"🛍️", n:"Listo para recoger", d:"Te esperamos en el local", seg:45 }, { i:"✅", n:"Entregado", d:"¡Buen provecho!", seg:75 }];
+  return [
+    { i:"📲", n:"Pedido enviado", d:"Llegó a nuestro WhatsApp", seg:0 },
+    { i:"👍", n:"Confirmado", d:"Revisamos tu pedido y el valor del domicilio", seg:8 },
+    { i:"🔥", n:"En preparación", d:"Tu pedido está en la plancha", seg:20 },
+    ...fin,
+  ];
+}
+function currentStage(o){
+  const s = (Date.now() - o.t) / 1000, st = stagesFor(o);
+  let k = 0; st.forEach((x,i) => { if(s >= x.seg) k = i; });
+  return k;
+}
+let trackTimer = null;
+function renderTrack(){
+  const o = lastOrder; if(!o) return;
+  const st = stagesFor(o), k = currentStage(o);
+  $("#track").innerHTML = `
+    <div class="track-top">
+      <div class="ok">✓</div>
+      <h3>${k === st.length-1 ? "¡Pedido entregado!" : "¡Pedido enviado!"}</h3>
+      <p>Te confirmaremos cada paso por WhatsApp.</p>
+    </div>
+    <div class="order-id"><b>#${o.id}</b><button id="copyId">Copiar</button></div>
+    <span class="demo-tag">● Simulación del seguimiento</span>
+    <ul class="steps-v">${st.map((x,i)=>`<li class="${i<k||k===st.length-1?"done":i===k?"now":""}"><span class="dot">${x.i}</span><div><b>${x.n}</b><small>${x.d}</small></div></li>`).join("")}</ul>
+    <div class="track-sum">${o.items.map(it=>`<div><span>${it.qty}x ${it.label}</span><span>${money(it.total)}</span></div>`).join("")}<div class="tt"><span>Total productos</span><span>${money(o.total)}</span></div></div>
+    <div class="track-btns">
+      <a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(`Hola Burger Ribs 👋 Quiero saber el estado de mi pedido #${o.id}`)}">Preguntar por mi pedido</a>
+      <button class="btn btn-ghost" id="closeTrack">Cerrar</button>
+    </div>`;
+  $("#closeTrack").onclick = closeTrack;
+  $("#copyId").onclick = () => { navigator.clipboard?.writeText(o.id); toast("Número copiado ✓"); };
+}
+function showTrack(){
+  if(!lastOrder) return toast("Aún no has hecho ningún pedido");
+  closeQA(); closeCart(); closeChat();
+  renderTrack(); $("#trackWrap").classList.add("on");
+  clearInterval(trackTimer); trackTimer = setInterval(renderTrack, 1500);
+}
+function closeTrack(){ $("#trackWrap").classList.remove("on"); clearInterval(trackTimer); }
+$("#trackWrap").addEventListener("click", e => { if(e.target.id === "trackWrap") closeTrack(); });
 $("#drawerBody").addEventListener("click", e => {
   const q = e.target.closest("[data-q]");
   if(q){ const l = cart[q.dataset.q]; l.qty += +q.dataset.d; if(l.qty<=0) cart.splice(q.dataset.q,1); renderCart(); }
@@ -988,7 +1096,7 @@ $("#drawerBody").addEventListener("click", e => {
 });
 $("#drawerBody").addEventListener("input", e => {
   const map = { fNombre:"nombre", fDir:"direccion", fPago:"pago", fNotas:"notas" };
-  if(map[e.target.id]){ order[map[e.target.id]] = e.target.value; $("#sendOrder").href = waLink(orderText()); }
+  if(map[e.target.id]){ order[map[e.target.id]] = e.target.value; }
 });
 function openCart(){ $("#drawer").classList.add("on"); $("#overlay").classList.add("on"); closeChat(); }
 function closeCart(){ $("#drawer").classList.remove("on"); $("#overlay").classList.remove("on"); }
@@ -996,18 +1104,23 @@ $("#openCart").onclick = openCart; $("#mbarCart").onclick = openCart;
 $("#closeCart").onclick = closeCart; $("#overlay").onclick = () => { closeCart(); closeQA(); };
 
 /* ===================== acceso rápido ===================== */
-function openQA(){ closeCart(); closeChat(); $("#qaCart").textContent = cart.length ? `${cartQty()} producto(s) · ${money(cartTotal())}` : "Vacío"; $("#qa").classList.add("on"); $("#overlay").classList.add("on"); }
+function openQA(){
+  closeCart(); closeChat();
+  $("#qaCart").textContent = cart.length ? `${cartQty()} producto(s) · ${money(cartTotal())}` : "Vacío";
+  $("#qaTrack").textContent = lastOrder ? `#${lastOrder.id} · ${stagesFor(lastOrder)[currentStage(lastOrder)].n}` : "Aún no has hecho pedidos";
+  $("#qa").classList.add("on"); $("#overlay").classList.add("on");
+}
 function closeQA(){ $("#qa").classList.remove("on"); $("#overlay").classList.remove("on"); }
 $("#openQA").onclick = openQA; $("#closeQA").onclick = closeQA;
 $$("[data-qa]").forEach(a => a.addEventListener("click", closeQA));
-$$("[data-qa-act]").forEach(b => b.onclick = () => { closeQA(); b.dataset.qaAct === "chat" ? openChat() : openCart(); });
+$$("[data-qa-act]").forEach(b => b.onclick = () => { closeQA(); const a = b.dataset.qaAct; a === "chat" ? openChat() : a === "track" ? showTrack() : openCart(); });
 $("#qaCats").innerHTML = MENU.map(c => `<button data-cat="${c.id}">${c.nombre}</button>`).join("");
 $("#qaCats").addEventListener("click", e => {
   const b = e.target.closest("button"); if(!b) return;
   activeCat = b.dataset.cat; renderTabs(); renderMenu(); closeQA();
   $("#carta").scrollIntoView({ behavior:"smooth" });
 });
-document.addEventListener("keydown", e => { if(e.key === "Escape"){ closeQA(); closeCart(); closeChat(); } });
+document.addEventListener("keydown", e => { if(e.key === "Escape"){ closeQA(); closeCart(); closeChat(); closeTrack(); } });
 addEventListener("scroll", () => $("#toTop").classList.toggle("on", scrollY > 900), { passive:true });
 $("#toTop").onclick = () => scrollTo({ top:0, behavior:"smooth" });
 
@@ -1052,6 +1165,7 @@ function botSay(html, opts=[], expect=null){
 }
 const mainOpts = () => [
   { l:"🍔 Hacer un pedido", fn:botCategorias },
+  { l:"📦 Estado de mi pedido", fn:botEstado },
   { l:"📋 Ver la carta", fn:()=>{ closeChat(); location.hash="#carta"; } },
   { l:"📍 ¿Dónde están?", fn:botUbicacion },
   { l:"🕒 Horarios", fn:()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, mainOpts()) },
@@ -1104,7 +1218,7 @@ function botPago(){
 function botFinal(){
   const list = cart.map(l=>`• ${l.qty}x ${lineLabel(l)}`).join("<br>");
   botSay(`Este es tu pedido:<br>${list}<br><br><b>Total: ${money(cartTotal())}</b>${order.entrega==="domicilio"?"<br><small style='color:var(--muted)'>+ domicilio según tu barrio</small>":""}<br><br>Toca el botón y se abre WhatsApp con todo escrito 👇`, [
-    { l:"📲 Enviar por WhatsApp", wa:true, fn:()=>{ window.open(waLink(orderText()),"_blank"); botSay("¡Listo! 🎉 Solo dale <b>enviar</b> en WhatsApp y empezamos a prepararlo.", mainOpts()); } },
+    { l:"📲 Enviar por WhatsApp", wa:true, fn:()=>{ const id = finalizeOrder(true); botSay(`¡Listo! 🎉 Tu número de pedido es <b>#${id}</b>.<br>Solo dale <b>enviar</b> en WhatsApp y empezamos a prepararlo. Te avisaremos por ahí cada paso.`, [{ l:"📦 Ver seguimiento", fn:showTrack }, ...mainOpts()]); } },
     { l:"✏️ Cambiar algo", fn:openCart },
   ]);
 }
@@ -1115,13 +1229,51 @@ function botUbicacion(){
     { l:"⬅ Menú principal", fn:botStart },
   ]);
 }
+function botEstado(){
+  if(!lastOrder) return botSay("Aún no tienes pedidos hechos desde aquí. ¿Armamos uno? 🍔", [{ l:"🍔 Hacer un pedido", fn:botCategorias }, { l:"⬅ Menú principal", fn:botStart }]);
+  const st = stagesFor(lastOrder)[currentStage(lastOrder)];
+  botSay(`Tu pedido <b>#${lastOrder.id}</b> está: <b>${st.i} ${st.n}</b><br><small style="color:var(--muted)">${st.d}</small>`, [
+    { l:"📦 Ver seguimiento", fn:showTrack },
+    { l:"💬 Preguntar al restaurante", fn:()=>{ window.open(waLink(`Hola Burger Ribs 👋 Quiero saber el estado de mi pedido #${lastOrder.id}`),"_blank"); botStart(); } },
+    { l:"⬅ Menú principal", fn:botStart },
+  ]);
+}
+// Pasa el caso a una persona por WhatsApp (con el número de pedido si existe)
+function botHumano(intro, msg){
+  const ref = lastOrder ? ` (pedido #${lastOrder.id})` : "";
+  botSay(intro, [
+    { l:"💬 Escribir al restaurante", wa:true, fn:()=>{ window.open(waLink(msg + ref),"_blank"); botSay("Te abrí WhatsApp para que te atienda una persona del equipo 👌", mainOpts()); } },
+    { l:"⬅ Menú principal", fn:botStart },
+  ]);
+}
+/* Filtro de temas: solo responde sobre el negocio.
+   Cada regla: palabras clave -> respuesta. Lo que no coincida se rechaza amablemente. */
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const REGLAS = [
+  { k:/cancel|cambiar (el |mi )?pedido|modificar|agregar (algo )?al pedido|quitar (algo )?del pedido/, fn:()=>botHumano("Para cambiar o cancelar un pedido ya enviado, escríbenos directo y lo ajustamos de una 👇", "Hola Burger Ribs, quiero hacer un cambio en mi pedido") },
+  { k:/queja|reclamo|llego (frio|mal|incompleto|tarde)|no llego|falto|problema|mal estado|equivocad/, fn:()=>botHumano("Lamentamos mucho lo que pasó 😔 Cuéntale al equipo y lo solucionamos lo antes posible.", "Hola Burger Ribs, tuve un problema con mi pedido") },
+  { k:/estado|mi pedido|mi orden|donde (esta|va)|ya (viene|sale|salio)|#?br-?\d|numero de pedido|seguimiento|rastrear/, fn:botEstado },
+  { k:/cuanto (vale|cuesta|cobran) (el )?domicilio|valor (del )?domicilio|costo (del )?domicilio|precio (del )?domicilio/, fn:()=>botSay("El valor del domicilio depende de tu barrio 📍 Te lo confirmamos por WhatsApp apenas recibamos tu pedido.", mainOpts()) },
+  { k:/llegan|cobertura|zona|barrio|hasta donde|a domicilio|domicilios/, fn:()=>botSay("Hacemos domicilios en Manizales 🛵 (zonas por confirmar). Al enviar tu pedido te confirmamos si llegamos a tu barrio y el valor.", [{ l:"🍔 Hacer un pedido", fn:botCategorias }, ...mainOpts().slice(2)]) },
+  { k:/demora|tarda|cuanto tiempo|tiempo de entrega|rapido/, fn:()=>botSay(`Normalmente tu pedido llega ${CONFIG.tiempoEntrega} ⏱️ En horas pico puede tardar un poco más.`, mainOpts()) },
+  { k:/\bpag(o|ar|an|os)\b|nequi|daviplata|tarjeta|efectivo|transferencia|datafono|bancolombia/, fn:()=>botSay(`Puedes pagar con: <b>${CONFIG.pagos.join(", ")}</b> 💳`, mainOpts()) },
+  { k:/\bhora|abren|cierran|abierto|atienden|domingo|festivo/, fn:()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, mainOpts()) },
+  { k:/donde|direcci|ubica|llegar|queda|local|mapa/, fn:botUbicacion },
+  { k:/combo/, fn:()=>botSay(`Cualquier hamburguesa la puedes volver <b>combo por +${money(CONFIG.combo)}</b>: incluye gaseosa + papas francesas, en casco, aros de cebolla o yuquitas 🍟`, [{ l:"🍔 Ver hamburguesas", fn:()=>botItems(MENU[0]) }, ...mainOpts().slice(1)]) },
+  { k:/recomi|la mas pedida|cual (me )?(pido|recomiendas)|la mejor (burger|hamburguesa)|favorit/, fn:()=>botSay("La más pedida es la <b>Winner Burger</b> 🏆 y la insignia de la casa es la <b>Winner de Costilla</b>. ¡No fallan!", [{ l:"Pedir Winner Burger", fn:()=>botPick(ITEMS["winner"]) }, { l:"Pedir Winner de Costilla", fn:()=>botPick(ITEMS["winner-costilla"]) }, { l:"⬅ Menú principal", fn:botStart }]) },
+  { k:/alergi|gluten|vegetarian|vegan|sin (cebolla|tomate|salsa|lechuga)|picante|ingrediente/, fn:()=>botHumano("Puedes escribir tus indicaciones en las <b>notas del pedido</b> 📝 Si tienes una alergia, mejor confírmalo con el equipo:", "Hola Burger Ribs, tengo una pregunta sobre ingredientes") },
+  { k:/factura|nit|electronica/, fn:()=>botHumano("Para factura electrónica, envíanos tus datos por WhatsApp 🧾", "Hola Burger Ribs, necesito factura electrónica") },
+  { k:/carta|menu|precio|cuanto (vale|cuesta)|hamburgues|burger|costilla|ribs|perro|salchipapa|picada|bebida|limonada|cerveza|entrada|pedir|antoj|tienen/, fn:botCategorias },
+  { k:/arma|personaliz|a mi gusto/, fn:()=>{ closeChat(); location.hash="#arma"; } },
+  { k:/gracias|listo|perfecto|genial|bacano|chevere/, fn:()=>botSay("¡Con gusto! 🙌 Aquí estoy si necesitas algo más.", mainOpts()) },
+  { k:/^(hola|buenas|buenos|hey|ola|saludos)/, fn:botStart },
+  { k:/persona|humano|asesor|operador|alguien|hablar/, fn:()=>botHumano("Claro, te comunico con una persona del equipo 👇", "Hola Burger Ribs, quiero hablar con alguien del equipo") },
+];
 function botFree(t){
-  const s = t.toLowerCase();
-  if(/carta|menu|menú|precio|hamburgues|burger/.test(s)) return botCategorias();
-  if(/donde|dónde|direcci|ubica|llegar/.test(s)) return botUbicacion();
-  if(/hora|abren|cierran/.test(s)) return botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, mainOpts());
-  if(/domicilio|pedido|pedir/.test(s)) return botCategorias();
-  botSay("No te entendí del todo 😅 pero te ayudo con esto:", mainOpts());
+  const s = norm(t);
+  const r = REGLAS.find(r => r.k.test(s));
+  if(r) return r.fn();
+  botSay("Uy, con eso no te puedo ayudar 😅 Solo sé de <b>Burger Ribs</b>: pedidos, la carta, domicilios, horarios y ubicación. ¿Te ayudo con algo de eso?", mainOpts());
 }
 $("#chatForm").addEventListener("submit", e => {
   e.preventDefault();
