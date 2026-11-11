@@ -612,7 +612,6 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
     <nav class="nav-links">
       <a href="#carta">Carta</a>
       <a href="#arma">Arma tu burger</a>
-      <a href="#domicilios">Domicilios</a>
       <a href="#ubicacion">Ubicación</a>
     </nav>
     <button class="cart-pill" id="openCart" aria-label="Ver mi pedido">
@@ -693,36 +692,12 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
   </div>
 </section>
 
-<!-- ============ DOMICILIOS ============ -->
-<section id="domicilios" class="light">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Domicilios</span>
-      <h2 class="display">Te lo llevamos <span class="accent">a casa</span></h2>
-      <p>Recién hecho, bien empacado y pagas al recibir.</p>
-    </div>
-    <div class="deliv-grid">
-      <div class="deliv-photo reveal">
-        <img src="img/domicilio.jpg" alt="Domiciliario en moto llevando un pedido" loading="lazy">
-        <div class="tag"><i></i><span><b>Tu pedido va en camino</b><br><small style="color:#6c5d4b">Te avisamos por WhatsApp</small></span></div>
-      </div>
-      <div class="zones reveal">
-        <h3>¿Cuánto vale el domicilio?</h3>
-        <p class="fine">Valores de ejemplo, por confirmar con el restaurante.</p>
-        <div id="zones"></div>
-        <div class="perks"><span><svg class="i"><use href="#i-clock"/></svg> 30–45 min aprox.</span><span><svg class="i"><use href="#i-cash"/></svg> Pago contraentrega</span><span><svg class="i"><use href="#i-box"/></svg> Empaque sellado</span></div>
-        <a href="#carta" class="btn btn-gold">Hacer mi pedido</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ UBICACIÓN ============ -->
-<section id="ubicacion" class="dark">
+<section id="ubicacion" class="light">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Ubicación</span>
-      <h2 class="display">¿Prefieres <span class="accent">venir?</span></h2>
+      <h2 class="display">Ven a <span class="accent">visitarnos</span></h2>
       <p>Estamos en Palermo, Manizales.</p>
     </div>
     <div class="loc-grid">
@@ -748,7 +723,7 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
 </section>
 
 <!-- ============ INSTAGRAM ============ -->
-<section class="ig light">
+<section class="ig dark">
   <div class="wrap ig-box">
     <div class="reveal">
       <span class="eyebrow">Síguenos</span>
@@ -803,7 +778,6 @@ footer{padding:50px 0 120px;background:#0a0807;color:#c2b4a0;font-size:.9rem}
     <a href="#arma" class="side-link" data-side-close><span class="ic"><svg class="i"><use href="#i-chef"/></svg></span><span>Arma tu burger<small>A tu gusto</small></span></a>
     <button class="side-link" data-side-act="track"><span class="ic"><svg class="i"><use href="#i-box"/></svg></span><span>Seguir mi pedido<small id="sideTrack">Aún no has hecho pedidos</small></span></button>
     <div class="side-sep"></div>
-    <a href="#domicilios" class="side-link" data-side-close><span class="ic"><svg class="i"><use href="#i-moto"/></svg></span><span>Domicilios<small>Precios por barrio</small></span></a>
     <a href="#ubicacion" class="side-link" data-side-close><span class="ic"><svg class="i"><use href="#i-pin"/></svg></span><span>Ubicación y horario<small>Mapa y cómo llegar</small></span></a>
     <a class="side-link" id="sideWa" target="_blank" rel="noopener"><span class="ic"><svg class="i"><use href="#i-wa"/></svg></span><span>Escríbenos<small>WhatsApp</small></span></a>
     <a href="https://www.instagram.com/burgerribs/" class="side-link" target="_blank" rel="noopener"><span class="ic"><svg class="i"><use href="#i-ig"/></svg></span><span>Instagram<small>@burgerribs</small></span></a>
@@ -1310,8 +1284,6 @@ $("#refs").innerHTML = CONFIG.referencias.map(r => `<li>${r}</li>`).join("");
 $("#sideWa").href = $("#footWa").href = waLink("¡Hola Burger Ribs!");
 $("#footWa").textContent = "WhatsApp · " + CONFIG.whatsapp.slice(2).replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
 $("#yr").textContent = new Date().getFullYear();
-$("#zones").innerHTML = CONFIG.zonas.map(z => `<div class="zone"><b>${money(z.p)}</b><span>${z.b.join(" · ")}</span></div>`).join("")
-  + `<div class="zone"><b style="font-size:1.2rem">¿Otro?</b><span>Escríbenos y te confirmamos</span></div>`;
 
 /* ===================== asistente (solo opciones) ===================== */
 const msgs = $("#msgs");
