@@ -869,6 +869,11 @@ const EXTRAS = {
    Si la foto no existe se muestra un ícono.
    ========================================================= */
 const MENU = [
+  { id:"entradas", nombre:"Entradas", items:[
+    { id:"deditos", n:"Deditos de Mozzarella", p:14900, d:"Crujientes por fuera, queso fundido por dentro.", img:"img/deditos.jpg" },
+    { id:"maduritos", n:"Maduritos Gratinados", p:12900, d:"Plátano maduro gratinado con queso.", img:"img/maduritos.jpg", ico:"" },
+    { id:"chorizo", n:"Chorizo Artesanal", p:11900, d:"Chorizo artesanal a la parrilla.", img:"img/chorizo.jpg" },
+  ]},
   { id:"hamburguesas", nombre:"Hamburguesas", nota:"Todas en pan brioche · Hazla combo por +$9.000 (gaseosa + acompañante)",
     sin:["Cebolla","Tomate","Lechuga","Salsas"], ext:EXTRAS.burger, items:[
     { id:"winner-costilla", n:"Winner de Costilla", p:29900, d:"Res y costilla ahumada, queso americano y salsa Winner.", img:"img/winner-costilla.jpg", badge:"De la casa", combo:true },
@@ -877,10 +882,6 @@ const MENU = [
     { id:"costilla", n:"Hamburguesa de Costilla", p:25900, d:"Costilla desmechada con el toque de la casa.", img:"img/costilla.jpg", combo:true },
     { id:"pollo-crunch", n:"Pollo Crunch", p:25900, d:"Pollo extra crujiente con salsa de miel.", img:"img/pollo-crunch.jpg", combo:true, sin:["Pepinillos","Cebolla","Tomate","Lechuga","Salsas"] },
     { id:"clasica", n:"La Clásica", p:23900, d:"Res a la parrilla y queso americano. Simple y perfecta.", img:"img/clasica.jpg", combo:true },
-  ]},
-  { id:"compartir", nombre:"Para compartir", ext:EXTRAS.compartir, items:[
-    { id:"salchipapas", n:"Salchipapas Burger Ribs", p:31900, d:"Papas, salchicha, costilla BBQ, panceta y quesos fundidos.", img:"img/salchipapas.jpg", badge:"Para compartir", sin:["Maíz","Salsas"] },
-    { id:"picada", n:"Picada Burger Ribs", p:49900, d:"Costillas BBQ, chorizo, panceta, maduro y papas.", img:"img/picada.jpg" },
   ]},
   { id:"costillas", nombre:"Costillas", items:[
     { id:"costillas-bbq", n:"Costillas BBQ", p:31900, d:"Costilla ahumada en salsa BBQ con papas en casco.", img:"img/costillas-bbq.jpg" },
@@ -891,10 +892,9 @@ const MENU = [
     { id:"perro-americano", n:"Perro Americano", p:17900, d:"Salchicha americana, piña caramelizada y queso.", img:"img/perro-americano.jpg" },
     { id:"chori-perro", n:"Chori Perro", p:17900, d:"Chorizo artesanal, piña caramelizada y queso.", img:"img/chori-perro.jpg" },
   ]},
-  { id:"entradas", nombre:"Entradas", items:[
-    { id:"deditos", n:"Deditos de Mozzarella", p:14900, d:"Crujientes por fuera, queso fundido por dentro.", img:"img/deditos.jpg" },
-    { id:"maduritos", n:"Maduritos Gratinados", p:12900, d:"Plátano maduro gratinado con queso.", img:"img/maduritos.jpg", ico:"" },
-    { id:"chorizo", n:"Chorizo Artesanal", p:11900, d:"Chorizo artesanal a la parrilla.", img:"img/chorizo.jpg" },
+  { id:"compartir", nombre:"Para compartir", ext:EXTRAS.compartir, items:[
+    { id:"salchipapas", n:"Salchipapas Burger Ribs", p:31900, d:"Papas, salchicha, costilla BBQ, panceta y quesos fundidos.", img:"img/salchipapas.jpg", badge:"Para compartir", sin:["Maíz","Salsas"] },
+    { id:"picada", n:"Picada Burger Ribs", p:49900, d:"Costillas BBQ, chorizo, panceta, maduro y papas.", img:"img/picada.jpg" },
   ]},
   { id:"bebidas", nombre:"Bebidas", lista:true, items:[
     { id:"lim-coco", n:"Limonada de Coco", p:11900 },
@@ -934,7 +934,7 @@ addEventListener("scroll", () => {
 $("#toTop").onclick = () => scrollTo({ top:0, behavior:"smooth" });
 
 /* ===================== carta ===================== */
-let activeCat = "hamburguesas";
+let activeCat = "entradas";
 function renderTabs(){
   $("#tabs").innerHTML = MENU.map(c => `<button class="tab ${c.id===activeCat?"active":""}" data-cat="${c.id}" role="tab">${c.nombre}</button>`).join("");
 }
@@ -1528,7 +1528,7 @@ const FAQ = {
   tiempo: ()=>botSay(`Normalmente llega ${CONFIG.tiempoEntrega}`, backOpts()),
   pagos: ()=>botSay(`Puedes pagar con: <b>${CONFIG.pagos.join(", ")}</b>`, backOpts()),
   horario: ()=>botSay(`Nuestro horario: <b>${CONFIG.horario}</b>`, backOpts()),
-  combo: ()=>botSay(`Cualquier hamburguesa la puedes pedir en <b>combo por +${money(CONFIG.combo)}</b>: gaseosa + papas francesas, en casco, aros de cebolla o yuquitas`, [{ l:"Ver hamburguesas", fn:()=>botItems(MENU[0]) }, ...backOpts()]),
+  combo: ()=>botSay(`Cualquier hamburguesa la puedes pedir en <b>combo por +${money(CONFIG.combo)}</b>: gaseosa + papas francesas, en casco, aros de cebolla o yuquitas`, [{ l:"Ver hamburguesas", fn:()=>botItems(MENU.find(c=>c.id==="hamburguesas")) }, ...backOpts()]),
   alergias: ()=>botHumano("Al elegir tu producto puedes quitarle ingredientes Si tienes una alergia, confírmalo con el equipo:", "Hola Burger Ribs, tengo una pregunta sobre ingredientes"),
 };
 function botFAQ(){
